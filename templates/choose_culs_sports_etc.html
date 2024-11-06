@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selection</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            font-family: "Open Sans", sans-serif;
+            accent-color: orange;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            background-color: #000000; /* Black background */
+            color: #ffffff; /* White text */
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+            gap: 3rem;
+            width: 100%;
+        }
+        .wrapper {
+            max-width: 75rem;
+            width: 100%;
+            padding: min(3rem, 5vw);
+        }
+        form {
+            padding: 1.5rem;
+            background-color: #000000; /* Black form background */
+            border-radius: 0.5rem;
+            border: 1px solid orange; /* Orange border */
+        }
+        legend {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: orange; /* Orange text */
+        }
+        h4 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #ff9e00; /* Orange text */
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        fieldset > * + * {
+            margin-top: 0.5rem;
+        }
+        form > * + * {
+            margin-top: 1.5rem;
+        }
+        .form__group {
+            display: flex;
+            align-items: center;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 1.5em;
+            height: 1.5em;
+            margin-right: 0.65rem;
+        }
+        input[type="submit"] {
+            background-color: orange;
+            color: #000000; /* Black text */
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #ff6f00; /* Darker orange on hover */
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <h1 style="color: orange;">Select Events</h1>
+    <div class="grid">
+        <form action="{{ url_for('submit') }}" method="post">
+            {% if 'sports' in chosen_categories %}
+            <fieldset>
+                <legend>Select Your Sports</legend>
+                <h4>Badminton - Open</h4>
+                <div class="form__group">
+                    <input type="checkbox" id="badminton_men_single" name="sports" value="badminton-men-single">
+                    <label for="badminton_men_single">Mens Single (₹472)</label>
+                </div>
+                <div class="form__group">
+                    <input type="checkbox" id="badminton_men_double" name="sports" value="badminton-men-double">
+                    <label for="badminton_men_double">Mens Double (₹826)</label>
+                </div>
+                <div class="form__group">
+                    <input type="checkbox" id="badminton_mixed_double" name="sports" value="badminton-mixed-double">
+                    <label for="badminton_mixed_double">Mixed Double (₹826)</label>
+                </div>
+
+                <h4>Basketball - Open</h4>
+                <div class="form__group">
+                    <input type="checkbox" id="basketball_women" name="sports" value="basketball-women">
+                    <label for="basketball_women">Women (₹5,074)</label>
+                </div>
+                <div class="form__group">
+                    <input type="checkbox" id="basketball_men" name="sports" value="basketball-men">
+                    <label for="basketball_men">Men (₹5,074)</label>
+                </div>
+
+                <h4>Frisbee - Open</h4>
+                <div class="form__group">
+                    <input type="checkbox" id="frisbee_open" name="sports" value="frisbee-open">
+                    <label for="frisbee_open">Open (₹5,310)</label>
+                </div>
+
+                <h4>Handball - Open</h4>
+                <div class="form__group">
+                    <input type="checkbox" id="handball_women" name="sports" value="handball-women">
+                    <label for="handball_women">Women (₹1,180)</label>
+                </div>
+                <div class="form__group">
+                    <input type="checkbox" id="handball_male" name="sports" value="handball-male">
+                    <label for="handball_male">Male (₹1,180)</label>
+                </div>
+
+                <h4>Squash - Open</h4>
+                <div class="form__group">
+                    <input type="checkbox" id="squash_women_single" name="sports" value="sqaush-women-single">
+                    <label for="squash_women_single">Women's Single (₹413)</label>
+                </div>
+
+                <h4>Swimming - Open</h4>
+                <div class="form__group">
+                    <input type="checkbox" id="swimming_relay_men" name="sports" value="swimming-4x50-relay-freestyle-men">
+                    <label for="swimming_relay_men">4X50 meters Relay freestyle men (₹708)</label>
+                </div>
+                <div class="form__group">
+                    <input type="checkbox" id="swimming_relay_women" name="sports" value="swimming-4x50-relay-freestyle-women">
+                    <label for="swimming_relay_women">4X50 meters Relay freestyle women (₹708)</label>
+                </div>
+
+                <h4>Table Tennis - Open</h4>
+                <div class="form__group">
+                    <input type="checkbox" id="table_tennis_mens_team" name="sports" value="table-tennis-mens-team">
+                    <label for="table_tennis_mens_team">Men's Team (₹1180)</label>
+                </div>
+
+                <h4>Volleyball</h4>
+                <div class="form__group">
+                    <input type="checkbox" id="volleyball_male" name="sports" value="volleyball-male">
+                    <label for="volleyball_male">Male (₹2,596)</label>
+                </div>
+
+                <h4>Chess</h4>
+                <div class="form__group">
+                    <input type="checkbox" id="chess_open" name="sports" value="chess-open">
+                    <label for="chess_open">Open (₹319)</label>
+                </div>
+            </fieldset>
+            {% endif %}
+
+            {% if 'culturals' in chosen_categories %}
+            <fieldset>
+                <legend>Select Your Favorite Culturals</legend>
+                <h4>Dance</h4>
+                <div class="form__group">
+                    <input type="checkbox" id="rhythm_solo_dance" name="culturals" value="rhythm-solo-dance">
+                    <label for="rhythm_solo_dance">Rhythm - Solo Dance (₹295)</label>
+                </div>
+
+                <h4>Music</h4>
+                <div class="form__group">
+                    <input type="checkbox" id="music_solo" name="culturals" value="music-solo">
+                    <label for="music_solo">Spotlight - Music Solo (₹295)</label>
+                </div>
+
+                <h4>Kahaani</h4>
+                <div class="form__group">
+                    <input type="checkbox" id="kahaani_photography" name="culturals" value="photography">
+                    <label for="kahaani_photography">Kahaani - Photography (₹59)</label>
+                </div>
+            </fieldset>
+            {% endif %}
+
+            {% if 'management' in chosen_categories %}
+            <fieldset>
+                <legend>Select Your Management Event</legend>
+                <h4>Management Events</h4>
+                <div class="form__group">
+                    <input type="checkbox" id="marcurious" name="management" value="marcurious">
+                    <label for="marcurious">Marcurious (₹590)</label>
+                </div>
+                <div class="form__group">
+                    <input type="checkbox" id="digi_quest" name="management" value="digi-quest">
+                    <label for="digi_quest">Digi Quest (₹590)</label>
+                </div>
+                <div class="form__group">
+                    <input type="checkbox" id="bull_bear_brawl" name="management" value="bull-bear-brawl">
+                    <label for="bull_bear_brawl">Bull & Bear Brawl (₹590)</label>
+                </div>
+                <div class="form__group">
+                    <input type="checkbox" id="mystery_maze" name="management" value="mystery-maze">
+                    <label for="mystery_maze">Mystery Maze (₹826)</label>
+                </div>
+            </fieldset>
+            {% endif %}
+            
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
