@@ -5,6 +5,11 @@
 
     ],
     "routes":[
-        {"src":"/(.*)", "dest":"main.py"}
+        {"src":"/(.*)", "dest":"main.py"},
+        {
+            "rewrites": [{ "source": "/(.*)", "destination": "main.py" }]
+        }
+
     ]
+    
 }
