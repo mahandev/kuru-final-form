@@ -1,22 +1,41 @@
 from flask import Flask, render_template, request, url_for, redirect, session, flash
-from pymongo import MongoClient
+from flask_pymongo import PyMongo
 import os
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
+from dotenv import load_dotenv
+import os
+import json 
+from bson import Binary, ObjectId  # Make sure Binary is imported from bson
 
-# Load environment variables
+
 load_dotenv()
 
+# Verify that the values are being loaded correctly
+print("SECRET_KEY:", os.getenv("SECRET_KEY"))
+print("MONGO_URI:", os.getenv("MONGO_URI"))
+
 app = Flask(__name__)
-app.secret_key = os.getenv("SECRET_KEY")  # Replace with a strong secret key for session encryption
+app.secret_key = os.getenv("SECRET_KEY")
 
-# CONNECTION_STRING = os.getenv("MONGO_URI")
-# client = MongoClient(CONNECTION_STRING)
+app.config['MONGO_URI'] = os.getenv("MONGO_URI")
 
-# db = client['Kurukshetra']  
-# users_collection = db['Users']
-# managers_collection = db['Managers']
-# participants_collection = db['Participants']
+# Initialize PyMongo with the Flask app
+mongo = PyMongo(app)
+
+# Check if PyMongo is initialized correctly
+print("Mongo initialized:", mongo)
+
+# Access the 'Kurukshetra' database directly
+db = mongo.db  # This accesses the default database from the URI
+# If you want to access a specific database that is not the default, use:
+# db = mongo.db['Kurukshetra']
+
+# Access collections in the 'Kurukshetra' database
+users_collection = db['Users']
+managers_collection = db['Managers']
+participants_collection = db['Participants']
+images_collection = db['images']  # Ensure this collection is defined for storing images
 
 # Event costs
 costs = {
@@ -299,11 +318,20 @@ def management_particpant_submit():
         managers_for_event = []
         manager_names = request.form.getlist(f'managerName{event}[]')
         manager_phones = request.form.getlist(f'managerPhone{event}[]')
+        manager_images = request.files.getlist(f'managerImage{event}[]')  # Get manager images
 
         for i in range(len(manager_names)):
+            # Store manager images into the 'images' collection and get the ObjectId
+            image_id = None
+            if manager_images[i]:
+                image_data = Binary(manager_images[i].read())
+                image_doc = images_collection.insert_one({'image': image_data})
+                image_id = str(image_doc.inserted_id)  # Save image ID for reference
+            
             manager = {
                 'name': manager_names[i],
                 'phone': manager_phones[i],
+                'image_id': image_id  # Store image reference in session
             }
             managers_for_event.append(manager)
 
@@ -311,11 +339,20 @@ def management_particpant_submit():
         participants_for_event = []
         participant_names = request.form.getlist(f'participantName{event}[]')
         participant_phones = request.form.getlist(f'participantPhone{event}[]')
+        participant_images = request.files.getlist(f'participantImage{event}[]')  # Get participant images
 
         for i in range(len(participant_names)):
+            # Store participant images into the 'images' collection and get the ObjectId
+            image_id = None
+            if participant_images[i]:
+                image_data = Binary(participant_images[i].read())
+                image_doc = images_collection.insert_one({'image': image_data})
+                image_id = str(image_doc.inserted_id)  # Save image ID for reference
+
             participant = {
                 'name': participant_names[i],
                 'phone': participant_phones[i],
+                'image_id': image_id  # Store image reference in session
             }
             participants_for_event.append(participant)
 
@@ -325,10 +362,28 @@ def management_particpant_submit():
             'participants': participants_for_event
         }
 
-    # Update the session with new user data
+    # Helper function to convert ObjectId to string for storage
+    def convert_objectid_to_str(obj):
+        if isinstance(obj, dict):
+            return {k: convert_objectid_to_str(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [convert_objectid_to_str(i) for i in obj]
+        elif isinstance(obj, ObjectId):
+            return str(obj)
+        else:
+            return obj
+
+    # Create a serialized copy of `user` for MongoDB
+    user_for_mongo = convert_objectid_to_str(user)
+
+    # Insert only the serialized copy into MongoDB
+    users_collection.insert_one(user_for_mongo)
+
+    # Save original `user` to session without modification
     session['user'] = user
 
     return session['user']
+
 
 
 if __name__ == '__main__':
