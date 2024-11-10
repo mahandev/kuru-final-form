@@ -39,7 +39,7 @@
     <div class="container mt-5">
         <h1 class="mb-4">Event Summary</h1>
 
-        <form action="{{ url_for('everything_submit') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ url_for('management_particpant_submit') }}" method="POST" enctype="multipart/form-data">
             {% if chosen_sports %}
                 <h2>Chosen Sports:</h2>
                 <table class="table table-striped">
@@ -60,14 +60,14 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <h5>Managers</h5>
-                                            <div id="managerContainer{{ sport }}">
-                                                <button type="button" class="btn btn-primary" onclick="addManager('{{ sport }}')">Add Manager</button>
+                                            <div id="managerContainer{{ sport | replace(' ', '') }}">
+                                                <button type="button" class="btn btn-primary" data-event="{{ sport | replace(' ', '') }}" onclick="addManager(this)">Add Manager</button>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <h5>Participants</h5>
-                                            <div id="participantContainer{{ sport }}">
-                                                <button type="button" class="btn btn-primary" onclick="addParticipant('{{ sport }}')">Add Participant</button>
+                                            <div id="participantContainer{{ sport | replace(' ', '') }}">
+                                                <button type="button" class="btn btn-primary" data-event="{{ sport | replace(' ', '') }}" onclick="addParticipant(this)">Add Participant</button>
                                             </div>
                                         </div>
                                     </div>
@@ -98,14 +98,14 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <h5>Managers</h5>
-                                            <div id="managerContainer{{ cultural }}">
-                                                <button type="button" class="btn btn-primary" onclick="addManager('{{ cultural }}')">Add Manager</button>
+                                            <div id="managerContainer{{ cultural | replace(' ', '') }}">
+                                                <button type="button" class="btn btn-primary" data-event="{{ cultural | replace(' ', '') }}" onclick="addManager(this)">Add Manager</button>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <h5>Participants</h5>
-                                            <div id="participantContainer{{ cultural }}">
-                                                <button type="button" class="btn btn-primary" onclick="addParticipant('{{ cultural }}')">Add Participant</button>
+                                            <div id="participantContainer{{ cultural | replace(' ', '') }}">
+                                                <button type="button" class="btn btn-primary" data-event="{{ cultural | replace(' ', '') }}" onclick="addParticipant(this)">Add Participant</button>
                                             </div>
                                         </div>
                                     </div>
@@ -136,14 +136,14 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <h5>Managers</h5>
-                                            <div id="managerContainer{{ management }}">
-                                                <button type="button" class="btn btn-primary" onclick="addManager('{{ management }}')">Add Manager</button>
+                                            <div id="managerContainer{{ management | replace(' ', '') }}">
+                                                <button type="button" class="btn btn-primary" data-event="{{ management | replace(' ', '') }}" onclick="addManager(this)">Add Manager</button>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <h5>Participants</h5>
-                                            <div id="participantContainer{{ management }}">
-                                                <button type="button" class="btn btn-primary" onclick="addParticipant('{{ management }}')">Add Participant</button>
+                                            <div id="participantContainer{{ management | replace(' ', '') }}">
+                                                <button type="button" class="btn btn-primary" data-event="{{ management | replace(' ', '') }}" onclick="addParticipant(this)">Add Participant</button>
                                             </div>
                                         </div>
                                     </div>
@@ -161,7 +161,8 @@
     </div>
 
     <script>
-        function addManager(event) {
+        function addManager(button) {
+            const event = button.dataset.event;
             const managerContainer = document.getElementById('managerContainer' + event);
             managerContainer.innerHTML += `
                 <div class="form-group">
@@ -175,7 +176,8 @@
             `;
         }
 
-        function addParticipant(event) {
+        function addParticipant(button) {
+            const event = button.dataset.event;
             const participantContainer = document.getElementById('participantContainer' + event);
             participantContainer.innerHTML += `
                 <div class="form-group">
@@ -189,5 +191,6 @@
             `;
         }
     </script>
+    
 </body>
 </html>

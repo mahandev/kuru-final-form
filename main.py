@@ -180,88 +180,46 @@ def submit():
         print("Chosen Management Events:", chosen_management)  # Debug statement
 
         # Calculate total user cost for chosen events
+        cultural_cost = 0
+        sports_cost = 0
+        management_cost = 0
         for i in chosen_culturals:
+            cultural_cost += costs[i]
             user_cost += costs[i]
         
         for i in chosen_sports:
+            sports_cost += costs[i]
             user_cost += costs[i]
         
         for i in chosen_management:
+            management_cost += costs[i]
             user_cost += costs[i]
-
-        # Retrieve user ID from session
+        
         user = session['user']
+        if "chosen_sports" in session["user"]: del user["chosen_sports"]
+        if "chosen_culturals" in session["user"]:del user["chosen_culturals"]
+        if "chosen_managment" in session["user"]:del user["chosen_management"]
 
-        user_events = []
+        if "sports" in user["categories"]:
+            user["chosen_sports"] = chosen_sports
+            user["sports_cost"] = sports_cost
 
-        # Function to store manager and participant info
-        def store_manager_and_participants(event, event_type):
-            managers = []
-            participants = []
+        if "management" in user["categories"]:
+            user["chosen_management"] = chosen_management
+            user["management_cost"] = management_cost
+        
+        if "culturals" in user["categories"]:
+            user["chosen_culturals"] = chosen_culturals
+            user["cultural_cost"] = cultural_cost
+        
+        user["total_cost"] = user_cost
+        session["user"] = user
 
-            # Store managers
-            for i, manager_name in enumerate(request.form.getlist(f'managerName{event}[]')):
-                manager = {
-                    'name': manager_name,
-                    'phone': request.form.getlist(f'managerPhone{event}[]')[i],
-                    'blood_type': request.form.getlist(f'managerBloodType{event}[]')[i],
-                    'user_id': user_id,
-                    'event_id': event
-                }
-                print("Manager Info:", manager)  # Debug statement
-                manager_id = managers_collection.insert_one(manager).inserted_id
-                managers.append(manager_id)
 
-            # Store participants
-            for i, participant_name in enumerate(request.form.getlist(f'participantName{event}[]')):
-                participant = {
-                    'name': participant_name,
-                    'phone': request.form.getlist(f'participantPhone{event}[]')[i],
-                    'blood_type': request.form.getlist(f'participantBloodType{event}[]')[i],
-                    'user_id': user_id,
-                    'event_id': event
-                }
-                print("Participant Info:", participant)  # Debug statement
-                participant_id = participants_collection.insert_one(participant).inserted_id
-                participants.append(participant_id)
+        
 
-            return managers, participants
 
-        # Process each selected sport
-        for sport in chosen_sports:
-            managers, participants = store_manager_and_participants(sport, 'sport')
-            user_events.append({
-                'event_id': sport,
-                'type': 'sport',
-                'managers': managers,
-                'participants': participants
-            })
 
-        # Process each selected cultural event
-        for cultural in chosen_culturals:
-            managers, participants = store_manager_and_participants(cultural, 'cultural')
-            user_events.append({
-                'event_id': cultural,
-                'type': 'cultural',
-                'managers': managers,
-                'participants': participants
-            })
-
-        # Process each selected management event
-        for management in chosen_management:
-            managers, participants = store_manager_and_participants(management, 'management')
-            user_events.append({
-                'event_id': management,
-                'type': 'management',
-                'managers': managers,
-                'participants': participants
-            })
-
-        # Update the user's events in the Users collection
-        users_collection.update_one({'_id': user_id}, {'$set': {'events': user_events}})
-        print("User Events Saved:", user_events)  # Debug statement
-
-    # User-friendly event names for display
     sport_names = {
         "badminton-men-single": "Men's Singles (Badminton)",
         "badminton-men-double": "Men's Doubles (Badminton)",
@@ -322,6 +280,58 @@ def submit():
                            sport_names=sport_names,
                            cultural_names=cultural_names,
                            management_names=management_names)
+
+
+
+@app.route('/management_particpant_submit', methods=["POST"])
+def management_particpant_submit():
+    user = session.get('user', {})
+    events = []
+    
+    # Collect chosen events from session
+    if "chosen_sports" in user: events += user['chosen_sports']
+    if "chosen_culturals" in user: events += user['chosen_culturals']
+    if "chosen_management" in user: events += user['chosen_management']
+
+    user['event_details'] = {}
+
+    # Iterate over each event to get managers and participants
+    for event in events:
+        # Collect managers for this event
+        managers_for_event = []
+        manager_names = request.form.getlist(f'managerName{event}[]')
+        manager_phones = request.form.getlist(f'managerPhone{event}[]')
+
+        for i in range(len(manager_names)):
+            manager = {
+                'name': manager_names[i],
+                'phone': manager_phones[i],
+            }
+            managers_for_event.append(manager)
+
+        # Collect participants for this event
+        participants_for_event = []
+        participant_names = request.form.getlist(f'participantName{event}[]')
+        participant_phones = request.form.getlist(f'participantPhone{event}[]')
+
+        for i in range(len(participant_names)):
+            participant = {
+                'name': participant_names[i],
+                'phone': participant_phones[i],
+            }
+            participants_for_event.append(participant)
+
+        # Store data in the session under the specific event
+        user['event_details'][event] = {
+            'managers': managers_for_event,
+            'participants': participants_for_event
+        }
+
+    # Update the session with new user data
+    session['user'] = user
+
+    return session['user']
+
 
 if __name__ == '__main__':
     app.run(debug=True)
