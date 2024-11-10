@@ -8,17 +8,15 @@ from bson.objectid import ObjectId
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with a strong secret key for session encryption
+app.secret_key = os.getenv("SECRET_KEY")  # Replace with a strong secret key for session encryption
 
-# MongoDB setup
-CONNECTION_STRING = os.getenv("MONGO_URI")
-client = MongoClient(CONNECTION_STRING)
+# CONNECTION_STRING = os.getenv("MONGO_URI")
+# client = MongoClient(CONNECTION_STRING)
 
-# Access the specified database and collections
-db = client['Kurukshetra']  # Database name
-users_collection = db['Users']
-managers_collection = db['Managers']
-participants_collection = db['Participants']
+# db = client['Kurukshetra']  
+# users_collection = db['Users']
+# managers_collection = db['Managers']
+# participants_collection = db['Participants']
 
 # Event costs
 costs = {
