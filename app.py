@@ -3,41 +3,22 @@ from flask_pymongo import PyMongo
 import os
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
-from dotenv import load_dotenv
-import os
-import json 
-from bson import Binary, ObjectId  # Make sure Binary is imported from bson
-
+from bson import Binary
 
 load_dotenv()
 
-# Verify that the values are being loaded correctly
-print("SECRET_KEY:", os.getenv("SECRET_KEY"))
-print("MONGO_URI:", os.getenv("MONGO_URI"))
-
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
-
 app.config['MONGO_URI'] = os.getenv("MONGO_URI")
 
-# Initialize PyMongo with the Flask app
 mongo = PyMongo(app)
 
-# Check if PyMongo is initialized correctly
-print("Mongo initialized:", mongo)
-
-# Access the 'Kurukshetra' database directly
-db = mongo.db  # This accesses the default database from the URI
-# If you want to access a specific database that is not the default, use:
-# db = mongo.db['Kurukshetra']
-
-# Access collections in the 'Kurukshetra' database
+# Access collections
+db = mongo.db
 users_collection = db['Users']
 managers_collection = db['Managers']
 participants_collection = db['Participants']
-images_collection = db['images']  # Ensure this collection is defined for storing images
 
-# Event costs
 costs = {
     "badminton-men-single": 472,
     "badminton-men-double": 826,
@@ -159,7 +140,6 @@ def submit_user_information():
 
     return redirect(url_for('choose_areas'))
 
-
 @app.route('/choose_areas')
 def choose_areas():
     return check_if_user_exists() or render_template('choose_area.html')
@@ -173,7 +153,6 @@ def area_choice():
         session['user'] = user_info
         return redirect(url_for('choose_events'))
     return "No areas selected"
-
 
 @app.route('/choose_events', methods=["GET", "POST"])
 def choose_events():
@@ -192,11 +171,6 @@ def submit():
         chosen_culturals = request.form.getlist('culturals')
         chosen_management = request.form.getlist('management')
 
-        print("Chosen Sports:", chosen_sports)  # Debug statement
-        print("Chosen Cultural Events:", chosen_culturals)  # Debug statement
-        print("Chosen Management Events:", chosen_management)  # Debug statement
-
-        # Calculate total user cost for chosen events
         cultural_cost = 0
         sports_cost = 0
         management_cost = 0
@@ -231,11 +205,6 @@ def submit():
         
         user["total_cost"] = user_cost
         session["user"] = user
-
-
-        
-
-
 
     sport_names = {
         "badminton-men-single": "Men's Singles (Badminton)",
@@ -287,7 +256,7 @@ def submit():
         "mystery-maze": "Mystery Maze"
     }
 
-    # Render the summary page with all the collected data
+
     return render_template('summary.html', 
                            chosen_sports=chosen_sports, 
                            chosen_culturals=chosen_culturals,
@@ -298,91 +267,80 @@ def submit():
                            cultural_names=cultural_names,
                            management_names=management_names)
 
+from flask import jsonify, request, session
+from bson.objectid import ObjectId
+from bson import Binary
 
+# Utility function to convert ObjectIds to strings
+def convert_objectid_to_str(obj):
+    if isinstance(obj, dict):
+        return {k: convert_objectid_to_str(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_objectid_to_str(i) for i in obj]
+    elif isinstance(obj, ObjectId):
+        return str(obj)
+    else:
+        return obj
 
+# Endpoint for handling event submission
 @app.route('/management_particpant_submit', methods=["POST"])
 def management_particpant_submit():
-    user = session.get('user', {})
-    events = []
-    
-    # Collect chosen events from session
-    if "chosen_sports" in user: events += user['chosen_sports']
-    if "chosen_culturals" in user: events += user['chosen_culturals']
-    if "chosen_management" in user: events += user['chosen_management']
-
+    user = session['user']
+    events = user.get('chosen_sports', []) + user.get('chosen_culturals', []) + user.get('chosen_management', [])
     user['event_details'] = {}
 
-    # Iterate over each event to get managers and participants
     for event in events:
+        managers = []
+        participants = []
+
         # Collect managers for this event
-        managers_for_event = []
         manager_names = request.form.getlist(f'managerName{event}[]')
         manager_phones = request.form.getlist(f'managerPhone{event}[]')
-        manager_images = request.files.getlist(f'managerImage{event}[]')  # Get manager images
+        manager_images = request.files.getlist(f'managerImage{event}[]')
 
-        for i in range(len(manager_names)):
-            # Store manager images into the 'images' collection and get the ObjectId
-            image_id = None
-            if manager_images[i]:
-                image_data = Binary(manager_images[i].read())
-                image_doc = images_collection.insert_one({'image': image_data})
-                image_id = str(image_doc.inserted_id)  # Save image ID for reference
-            
-            manager = {
-                'name': manager_names[i],
-                'phone': manager_phones[i],
-                'image_id': image_id  # Store image reference in session
-            }
-            managers_for_event.append(manager)
+        for name, phone, image in zip(manager_names, manager_phones, manager_images):
+            if name and phone:
+                manager = {
+                    'name': name,
+                    'phone': phone,
+                    'event': event,
+                    'role': 'manager',
+                    'status': "Outside Campus",
+                    'image_data': Binary(image.read()) if image else None
+                }
+                managers_collection.insert_one(manager)
+                managers.append(manager)
 
         # Collect participants for this event
-        participants_for_event = []
         participant_names = request.form.getlist(f'participantName{event}[]')
         participant_phones = request.form.getlist(f'participantPhone{event}[]')
-        participant_images = request.files.getlist(f'participantImage{event}[]')  # Get participant images
+        participant_images = request.files.getlist(f'participantImage{event}[]')
 
-        for i in range(len(participant_names)):
-            # Store participant images into the 'images' collection and get the ObjectId
-            image_id = None
-            if participant_images[i]:
-                image_data = Binary(participant_images[i].read())
-                image_doc = images_collection.insert_one({'image': image_data})
-                image_id = str(image_doc.inserted_id)  # Save image ID for reference
+        for name, phone, image in zip(participant_names, participant_phones, participant_images):
+            if name and phone:
+                participant = {
+                    'name': name,
+                    'phone': phone,
+                    'event': event,
+                    'role': 'participant',
+                    'status': "Outside Campus",
+                    'image_data': Binary(image.read()) if image else None
+                }
+                participants_collection.insert_one(participant)
+                participants.append(participant)
 
-            participant = {
-                'name': participant_names[i],
-                'phone': participant_phones[i],
-                'image_id': image_id  # Store image reference in session
-            }
-            participants_for_event.append(participant)
-
-        # Store data in the session under the specific event
+        # Save event details for user
         user['event_details'][event] = {
-            'managers': managers_for_event,
-            'participants': participants_for_event
+            'managers': managers,
+            'participants': participants
         }
 
-    # Helper function to convert ObjectId to string for storage
-    def convert_objectid_to_str(obj):
-        if isinstance(obj, dict):
-            return {k: convert_objectid_to_str(v) for k, v in obj.items()}
-        elif isinstance(obj, list):
-            return [convert_objectid_to_str(i) for i in obj]
-        elif isinstance(obj, ObjectId):
-            return str(obj)
-        else:
-            return obj
-
-    # Create a serialized copy of `user` for MongoDB
-    user_for_mongo = convert_objectid_to_str(user)
-
-    # Insert only the serialized copy into MongoDB
-    users_collection.insert_one(user_for_mongo)
-
-    # Save original `user` to session without modification
+    users_collection.insert_one(user).inserted_id
     session['user'] = user
-
     return session['user']
+
+
+
 
 
 

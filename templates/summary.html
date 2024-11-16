@@ -60,14 +60,14 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <h5>Managers</h5>
-                                            <div id="managerContainer{{ sport | replace(' ', '') }}">
-                                                <button type="button" class="btn btn-primary" data-event="{{ sport | replace(' ', '') }}" onclick="addManager(this)">Add Manager</button>
+                                            <div id="managerContainer{{ sport }}">
+                                                <button type="button" class="btn btn-primary" onclick="addManager('{{ sport }}')">Add Manager</button>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <h5>Participants</h5>
-                                            <div id="participantContainer{{ sport | replace(' ', '') }}">
-                                                <button type="button" class="btn btn-primary" data-event="{{ sport | replace(' ', '') }}" onclick="addParticipant(this)">Add Participant</button>
+                                            <div id="participantContainer{{ sport }}">
+                                                <button type="button" class="btn btn-primary" onclick="addParticipant('{{ sport }}')">Add Participant</button>
                                             </div>
                                         </div>
                                     </div>
@@ -98,14 +98,14 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <h5>Managers</h5>
-                                            <div id="managerContainer{{ cultural | replace(' ', '') }}">
-                                                <button type="button" class="btn btn-primary" data-event="{{ cultural | replace(' ', '') }}" onclick="addManager(this)">Add Manager</button>
+                                            <div id="managerContainer{{ cultural }}">
+                                                <button type="button" class="btn btn-primary" onclick="addManager('{{ cultural }}')">Add Manager</button>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <h5>Participants</h5>
-                                            <div id="participantContainer{{ cultural | replace(' ', '') }}">
-                                                <button type="button" class="btn btn-primary" data-event="{{ cultural | replace(' ', '') }}" onclick="addParticipant(this)">Add Participant</button>
+                                            <div id="participantContainer{{ cultural }}">
+                                                <button type="button" class="btn btn-primary" onclick="addParticipant('{{ cultural }}')">Add Participant</button>
                                             </div>
                                         </div>
                                     </div>
@@ -136,14 +136,14 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <h5>Managers</h5>
-                                            <div id="managerContainer{{ management | replace(' ', '') }}">
-                                                <button type="button" class="btn btn-primary" data-event="{{ management | replace(' ', '') }}" onclick="addManager(this)">Add Manager</button>
+                                            <div id="managerContainer{{ management }}">
+                                                <button type="button" class="btn btn-primary" onclick="addManager('{{ management }}')">Add Manager</button>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <h5>Participants</h5>
-                                            <div id="participantContainer{{ management | replace(' ', '') }}">
-                                                <button type="button" class="btn btn-primary" data-event="{{ management | replace(' ', '') }}" onclick="addParticipant(this)">Add Participant</button>
+                                            <div id="participantContainer{{ management }}">
+                                                <button type="button" class="btn btn-primary" onclick="addParticipant('{{ management }}')">Add Participant</button>
                                             </div>
                                         </div>
                                     </div>
@@ -155,16 +155,14 @@
             {% endif %}
 
             <h3>Total Cost: ₹{{ total_cost }}</h3>
-
             <button type="submit" class="btn btn-primary">Submit All Events</button>
         </form>
     </div>
 
     <script>
-        function addManager(button) {
-            const event = button.dataset.event;
+        function addManager(event) {
             const managerContainer = document.getElementById('managerContainer' + event);
-            managerContainer.innerHTML += `
+            managerContainer.insertAdjacentHTML('beforeend', `
                 <div class="form-group">
                     <label>Manager Name:</label>
                     <input type="text" name="managerName${event}[]" class="form-control" required>
@@ -173,13 +171,12 @@
                     <label>Manager Image:</label>
                     <input type="file" name="managerImage${event}[]" class="form-control-file" accept="image/*" required>
                 </div>
-            `;
+            `);
         }
 
-        function addParticipant(button) {
-            const event = button.dataset.event;
+        function addParticipant(event) {
             const participantContainer = document.getElementById('participantContainer' + event);
-            participantContainer.innerHTML += `
+            participantContainer.insertAdjacentHTML('beforeend', `
                 <div class="form-group">
                     <label>Participant Name:</label>
                     <input type="text" name="participantName${event}[]" class="form-control" required>
@@ -188,9 +185,8 @@
                     <label>Participant Image:</label>
                     <input type="file" name="participantImage${event}[]" class="form-control-file" accept="image/*" required>
                 </div>
-            `;
+            `);
         }
     </script>
-    
 </body>
 </html>
