@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/devamarnani/Desktop/final-kuru-registration-form/env"
+VIRTUAL_ENV="/home/jitendra/kuru-final-form/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
