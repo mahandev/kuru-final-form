@@ -28,7 +28,6 @@ users_collection = db['Users']
 managers_collection = db['Managers']
 participants_collection = db['Participants']
 
-user = {}
 
 def check_if_user_exists():
     if 'user' not in session.keys():
