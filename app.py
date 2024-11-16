@@ -4,7 +4,8 @@ import os
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
 from bson import Binary
-
+from bson import json_util
+import json
 load_dotenv()
 
 app = Flask(__name__)
@@ -336,8 +337,9 @@ def management_particpant_submit():
         }
 
     users_collection.insert_one(user).inserted_id
-    session['user'] = user
+    session['user'] = json.loads(json_util.dumps(user))
     return session['user']
+    return ""
 
 
 
