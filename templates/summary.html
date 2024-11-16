@@ -40,7 +40,6 @@
         <h1 class="mb-4">Event Summary</h1>
 
         <form action="{{ url_for('management_particpant_submit') }}" method="POST" enctype="multipart/form-data">
-            {% if chosen_sports %}
                 <h2>Chosen Sports:</h2>
                 <table class="table table-striped">
                     <thead>
@@ -57,6 +56,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
+                                    {% for i in range(0, number_of_particpants[sport]["min"]) %}
                                     <div class="form-group">
                                         <label>Participant Name:</label>
                                         <input type="text" name="participantName{{sport}}[]" class="form-control" required>
@@ -65,22 +65,44 @@
                                         <label>Participant Image:</label>
                                         <input type="file" name="participantImage{{sport}}[]" class="form-control-file" accept="image/*" required>
                                     </div>
+                                    {%endfor%}
+                                    {% for i in range(0, (number_of_particpants[sport]["max"] - number_of_particpants[sport]["min"])) %}
+                                    <div class="form-group">
+                                        <label>Participant Name:</label>
+                                        <input type="text" name="participantName{{sport}}[]" class="form-control" style="background-color: red;">
+                                        <label>Participant Phone:</label>
+                                        <input type="text" name="participantPhone{{sport}}[]" class="form-control" style="background-color: red;">
+                                        <label>Participant Image:</label>
+                                        <input type="file" name="participantImage{{sport}}[]" class="form-control-file" accept="image/*" style="background-color: red;">
+                                    </div>
+                                    {% endfor %}
+                                    {% for i in range(0, number_of_managers[sport]["min"]) %}
                                     <div class="form-group">
                                         <label>Manager Name:</label>
-                                        <input type="text" name="managerName${{sport}}[]" class="form-control" required>
+                                        <input type="text" name="managerName{{sport}}[]" class="form-control" required>
                                         <label>Manager Phone:</label>
-                                        <input type="text" name="managerPhone${{sport}}[]" class="form-control" required>
+                                        <input type="text" name="managerPhone{{sport}}[]" class="form-control" required>
                                         <label>Manager Image:</label>
-                                        <input type="file" name="managerImage${{sport}}[]" class="form-control-file" accept="image/*" required>
+                                        <input type="file" name="managerImage{{sport}}[]" class="form-control-file" accept="image/*" required>
                                     </div>
+                                    {%endfor%}
+                                    {% for i in range(0, (number_of_managers[sport]["max"] - number_of_managers[sport]["min"])) %}
+                                    <div class="form-group">
+                                        <label>Manager Name:</label>
+                                        <input type="text" name="managerName{{sport}}[]" class="form-control" style="background-color: red;">
+                                        <label>Manager Phone:</label>
+                                        <input type="text" name="managerPhone{{sport}}[]" class="form-control" style="background-color: red;">
+                                        <label>Manager Image:</label>
+                                        <input type="file" name="managerImage{{sport}}[]" class="form-control-file" accept="image/*" style="background-color: red;">
+                                    </div>
+                                    {% endfor %}
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-            {% endif %}
 
-            <!-- {% if chosen_culturals %}
+            {% if chosen_culturals %}
                 <h2>Chosen Cultural Events:</h2>
                 <table class="table table-striped">
                     <thead>
@@ -97,20 +119,46 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <div class="row mb-4">
-                                        <div class="col-md-6">
-                                            <h5>Managers</h5>
-                                            <div id="managerContainer{{ cultural }}">
-                                                <button type="button" class="btn btn-primary" onclick="addManager('{{ cultural }}')">Add Manager</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h5>Participants</h5>
-                                            <div id="participantContainer{{ cultural }}">
-                                                <button type="button" class="btn btn-primary" onclick="addParticipant('{{ cultural }}')">Add Participant</button>
-                                            </div>
-                                        </div>
+                                    {% for i in range(0, number_of_particpants[cultural]["min"]) %}
+                                    <div class="form-group">
+                                        <label>Participant Name:</label>
+                                        <input type="text" name="participantName{{cultural}}[]" class="form-control" required>
+                                        <label>Participant Phone:</label>
+                                        <input type="text" name="participantPhone{{cultural}}[]" class="form-control" required>
+                                        <label>Participant Image:</label>
+                                        <input type="file" name="participantImage{{cultural}}[]" class="form-control-file" accept="image/*" required>
                                     </div>
+                                    {%endfor%}
+                                    {% for i in range(0, (number_of_particpants[cultural]["max"] - number_of_particpants[cultural]["min"])) %}
+                                    <div class="form-group">
+                                        <label>Participant Name:</label>
+                                        <input type="text" name="participantName{{cultural}}[]" class="form-control" style="background-color: red;">
+                                        <label>Participant Phone:</label>
+                                        <input type="text" name="participantPhone{{cultural}}[]" class="form-control" style="background-color: red;">
+                                        <label>Participant Image:</label>
+                                        <input type="file" name="participantImage{{cultural}}[]" class="form-control-file" accept="image/*" style="background-color: red;">
+                                    </div>
+                                    {% endfor %}
+                                    {% for i in range(0, number_of_managers[cultural]["min"]) %}
+                                    <div class="form-group">
+                                        <label>Manager Name:</label>
+                                        <input type="text" name="managerName{{cultural}}[]" class="form-control" required>
+                                        <label>Manager Phone:</label>
+                                        <input type="text" name="managerPhone{{cultural}}[]" class="form-control" required>
+                                        <label>Manager Image:</label>
+                                        <input type="file" name="managerImage{{cultural}}[]" class="form-control-file" accept="image/*" required>
+                                    </div>
+                                    {%endfor%}
+                                    {% for i in range(0, (number_of_managers[cultural]["max"] - number_of_managers[cultural]["min"])) %}
+                                    <div class="form-group">
+                                        <label>Manager Name:</label>
+                                        <input type="text" name="managerName{{cultural}}[]" class="form-control" style="background-color: red;">
+                                        <label>Manager Phone:</label>
+                                        <input type="text" name="managerPhone{{cultural}}[]" class="form-control" style="background-color: red;">
+                                        <label>Manager Image:</label>
+                                        <input type="file" name="managerImage{{cultural}}[]" class="form-control-file" accept="image/*" style="background-color: red;">
+                                    </div>
+                                    {% endfor %}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -135,26 +183,52 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <div class="row mb-4">
-                                        <div class="col-md-6">
-                                            <h5>Managers</h5>
-                                            <div id="managerContainer{{ management }}">
-                                                <button type="button" class="btn btn-primary" onclick="addManager('{{ management }}')">Add Manager</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h5>Participants</h5>
-                                            <div id="participantContainer{{ management }}">
-                                                <button type="button" class="btn btn-primary" onclick="addParticipant('{{ management }}')">Add Participant</button>
-                                            </div>
-                                        </div>
+                                    {% for i in range(0, number_of_particpants[management]["min"]) %}
+                                    <div class="form-group">
+                                        <label>Participant Name:</label>
+                                        <input type="text" name="participantName{{management}}[]" class="form-control" required>
+                                        <label>Participant Phone:</label>
+                                        <input type="text" name="participantPhone{{management}}[]" class="form-control" required>
+                                        <label>Participant Image:</label>
+                                        <input type="file" name="participantImage{{management}}[]" class="form-control-file" accept="image/*" required>
                                     </div>
+                                    {%endfor%}
+                                    {% for i in range(0, (number_of_particpants[management]["max"] - number_of_particpants[management]["min"])) %}
+                                    <div class="form-group">
+                                        <label>Participant Name:</label>
+                                        <input type="text" name="participantName{{management}}[]" class="form-control" style="background-color: red;">
+                                        <label>Participant Phone:</label>
+                                        <input type="text" name="participantPhone{{management}}[]" class="form-control" style="background-color: red;">
+                                        <label>Participant Image:</label>
+                                        <input type="file" name="participantImage{{management}}[]" class="form-control-file" accept="image/*" style="background-color: red;">
+                                    </div>
+                                    {% endfor %}
+                                    {% for i in range(0, number_of_managers[management]["min"]) %}
+                                    <div class="form-group">
+                                        <label>Manager Name:</label>
+                                        <input type="text" name="managerName{{management}}[]" class="form-control" required>
+                                        <label>Manager Phone:</label>
+                                        <input type="text" name="managerPhone{{management}}[]" class="form-control" required>
+                                        <label>Manager Image:</label>
+                                        <input type="file" name="managerImage{{management}}[]" class="form-control-file" accept="image/*" required>
+                                    </div>
+                                    {%endfor%}
+                                    {% for i in range(0, (number_of_managers[management]["max"] - number_of_managers[management]["min"])) %}
+                                    <div class="form-group">
+                                        <label>Manager Name:</label>
+                                        <input type="text" name="managerName{{management}}[]" class="form-control" style="background-color: red;">
+                                        <label>Manager Phone:</label>
+                                        <input type="text" name="managerPhone{{management}}[]" class="form-control" style="background-color: red;">
+                                        <label>Manager Image:</label>
+                                        <input type="file" name="managerImage{{management}}[]" class="form-control-file" accept="image/*" style="background-color: red;">
+                                    </div>
+                                    {% endfor %}
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-            {% endif %} -->
+            {% endif %}
 
             <h3>Total Cost: ₹{{ total_cost }}</h3>
             <button type="submit" class="btn btn-primary">Submit All Events</button>

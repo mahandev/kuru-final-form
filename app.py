@@ -9,12 +9,15 @@ from sports_name_data import sports_name_data
 from cultural_name_data import cultural_name_data
 from management_name_data import management_name_data
 import json
+from flask_session import Session
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 app.config['MONGO_URI'] = os.getenv("MONGO_URI")
-
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 mongo = PyMongo(app)
 
 # Access collections
@@ -22,6 +25,8 @@ db = mongo.db
 users_collection = db['Users']
 managers_collection = db['Managers']
 participants_collection = db['Participants']
+
+user = {}
 
 def check_if_user_exists():
     if 'user' not in session.keys():
@@ -59,7 +64,6 @@ def submit_user_information():
 @app.route('/choose_areas')
 def choose_areas():
     sport_names = list(sports_name_data.keys())
-    print(sport_names)
     # print(sports_name_data[sport]["price"])
     return check_if_user_exists() or render_template('choose_area.html')
 
@@ -88,7 +92,6 @@ def choose_events():
     management_categories = {}
     for management in management_names:
         management_categories[management]= ([x for x in list(management_name_data[management])])
-    print(management_names)
     
         
     # print(sports_name_data[sport]["price"])
@@ -141,8 +144,6 @@ def submit():
         
         for i in chosen_management:
             management, category = i.split('-', 1)
-            print(management)
-            print(category)
             management_cost += management_name_data[management][category]["price"]
             key = category
             costs[key] = management_name_data[management][category]["price"]
@@ -162,7 +163,7 @@ def submit():
         
         for i in chosen_sports:
             s, category = i.split('-', 1)
-            c_culturals.append(category)
+            c_sports.append(category)
             number_of_particpants[category] = {"min":sports_name_data[s][category]["min_participants"], "max":sports_name_data[s][category]["max_participants"]}
             number_of_managers[category] = {"min":sports_name_data[s][category]["min_managers"], "max":sports_name_data[s][category]["max_managers"]}
         
@@ -175,11 +176,8 @@ def submit():
 
         
 
-            
-        print(costs)
 
         user_cost += cultural_cost + sports_cost + management_cost 
-        print(sports_cost, cultural_cost, management_cost, user_cost)
         
         user = session['user']
         if "chosen_sports" in session["user"]: del user["chosen_sports"]
@@ -187,15 +185,15 @@ def submit():
         if "chosen_managment" in session["user"]:del user["chosen_management"]
 
         if "sports" in user["categories"]:
-            user["chosen_sports"] = chosen_sports
+            user["chosen_sports"] = c_sports
             user["sports_cost"] = sports_cost
 
         if "management" in user["categories"]:
-            user["chosen_management"] = chosen_management
+            user["chosen_management"] = c_management
             user["management_cost"] = management_cost
         
         if "culturals" in user["categories"]:
-            user["chosen_culturals"] = chosen_culturals
+            user["chosen_culturals"] = c_culturals
             user["cultural_cost"] = cultural_cost
         
         user["total_cost"] = user_cost
