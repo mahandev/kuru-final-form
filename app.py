@@ -8,6 +8,7 @@ from bson import json_util
 from sports_name_data import sports_name_data
 from cultural_name_data import cultural_name_data
 from management_name_data import management_name_data
+from gridfs import GridFS
 import json
 from flask_session import Session
 load_dotenv()
@@ -22,6 +23,7 @@ mongo = PyMongo(app)
 
 # Access collections
 db = mongo.db
+fs = GridFS(mongo.db)
 users_collection = db['Users']
 managers_collection = db['Managers']
 participants_collection = db['Participants']
@@ -239,13 +241,14 @@ def management_particpant_submit():
 
         for name, phone, image in zip(manager_names, manager_phones, manager_images):
             if name and phone:
+                image_id = fs.put(image, filename=f"{name}_image", content_type=image.content_type)
                 manager = {
                     'name': name,
                     'phone': phone,
                     'event': event,
                     'role': 'manager',
                     'status': "Outside Campus",
-                    'image_data': Binary(image.read()) if image else None
+                    'image_id': image_id  # Store the GridFS file ID as a reference
                 }
                 managers_collection.insert_one(manager)
                 managers.append(manager)
@@ -257,13 +260,14 @@ def management_particpant_submit():
 
         for name, phone, image in zip(participant_names, participant_phones, participant_images):
             if name and phone:
+                image_id = fs.put(image, filename=f"{name}_image", content_type=image.content_type)
                 participant = {
                     'name': name,
                     'phone': phone,
                     'event': event,
                     'role': 'participant',
                     'status': "Outside Campus",
-                    'image_data': Binary(image.read()) if image else None
+                    'image_id': image_id  # Store the GridFS file ID as a reference
                 }
                 participants_collection.insert_one(participant)
                 participants.append(participant)
