@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<!-- Bootstrap Packaged JS (Bundle) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selection</title>
@@ -81,6 +85,9 @@
                 grid-template-columns: 1fr;
             }
         }
+        .form__group{
+            margin-bottom: 1vh;
+        }
     </style>
 </head>
 <body>
@@ -92,109 +99,49 @@
             {% if 'sports' in chosen_categories %}
             <fieldset>
                 <legend>Select Your Sports</legend>
-                <h4>Badminton - Open</h4>
-                <div class="form__group">
-                    <input type="checkbox" id="badminton_men_single" name="sports" value="badminton-men-single">
-                    <label for="badminton_men_single">Mens Single (₹472)</label>
+                <div class="container">
+                    <div class="row">
+                        {% for sport in sport_names %}
+                        <div class="col-md-6">
+                            <h4>{{ sport }}</h4>
+                            {% for category in sport_categories[sport] %}
+                            <div class="form__group" >
+                                <input  type="checkbox"  name="sports" value="{{ sport }}-{{ category }}">
+                                <label for="{{ category }}">{{ category }} ₹{{ sports_name_data[sport][category]["price"] }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-                <div class="form__group">
-                    <input type="checkbox" id="badminton_men_double" name="sports" value="badminton-men-double">
-                    <label for="badminton_men_double">Mens Double (₹826)</label>
-                </div>
-                <div class="form__group">
-                    <input type="checkbox" id="badminton_mixed_double" name="sports" value="badminton-mixed-double">
-                    <label for="badminton_mixed_double">Mixed Double (₹826)</label>
-                </div>
-
-                <h4>Basketball - Open</h4>
-                <div class="form__group">
-                    <input type="checkbox" id="basketball_women" name="sports" value="basketball-women">
-                    <label for="basketball_women">Women (₹5,074)</label>
-                </div>
-                <div class="form__group">
-                    <input type="checkbox" id="basketball_men" name="sports" value="basketball-men">
-                    <label for="basketball_men">Men (₹5,074)</label>
-                </div>
-
-                <h4>Frisbee - Open</h4>
-                <div class="form__group">
-                    <input type="checkbox" id="frisbee_open" name="sports" value="frisbee-open">
-                    <label for="frisbee_open">Open (₹5,310)</label>
-                </div>
-
-                <h4>Handball - Open</h4>
-                <div class="form__group">
-                    <input type="checkbox" id="handball_women" name="sports" value="handball-women">
-                    <label for="handball_women">Women (₹1,180)</label>
-                </div>
-                <div class="form__group">
-                    <input type="checkbox" id="handball_male" name="sports" value="handball-male">
-                    <label for="handball_male">Male (₹1,180)</label>
-                </div>
-
-                <h4>Squash - Open</h4>
-                <div class="form__group">
-                    <input type="checkbox" id="squash_women_single" name="sports" value="sqaush-women-single">
-                    <label for="squash_women_single">Women's Single (₹413)</label>
-                </div>
-
-                <h4>Swimming - Open</h4>
-                <div class="form__group">
-                    <input type="checkbox" id="swimming_relay_men" name="sports" value="swimming-4x50-relay-freestyle-men">
-                    <label for="swimming_relay_men">4X50 meters Relay freestyle men (₹708)</label>
-                </div>
-                <div class="form__group">
-                    <input type="checkbox" id="swimming_relay_women" name="sports" value="swimming-4x50-relay-freestyle-women">
-                    <label for="swimming_relay_women">4X50 meters Relay freestyle women (₹708)</label>
-                </div>
-
-                <h4>Table Tennis - Open</h4>
-                <div class="form__group">
-                    <input type="checkbox" id="table_tennis_mens_team" name="sports" value="table-tennis-mens-team">
-                    <label for="table_tennis_mens_team">Men's Team (₹1180)</label>
-                </div>
-
-                <h4>Volleyball</h4>
-                <div class="form__group">
-                    <input type="checkbox" id="volleyball_male" name="sports" value="volleyball-male">
-                    <label for="volleyball_male">Male (₹2,596)</label>
-                </div>
-
-                <h4>Chess</h4>
-                <div class="form__group">
-                    <input type="checkbox" id="chess_open" name="sports" value="chess-open">
-                    <label for="chess_open">Open (₹319)</label>
-                </div>
-            </fieldset>
             {% endif %}
-
+                <hr>
             {% if 'culturals' in chosen_categories %}
             <fieldset>
-                <legend>Select Your Favorite Culturals</legend>
-                <h4>Dance</h4>
-                <div class="form__group">
-                    <input type="checkbox" id="rhythm_solo_dance" name="culturals" value="rhythm-solo-dance">
-                    <label for="rhythm_solo_dance">Rhythm - Solo Dance (₹295)</label>
-                </div>
-
-                <h4>Music</h4>
-                <div class="form__group">
-                    <input type="checkbox" id="music_solo" name="culturals" value="music-solo">
-                    <label for="music_solo">Spotlight - Music Solo (₹295)</label>
-                </div>
-
-                <h4>Kahaani</h4>
-                <div class="form__group">
-                    <input type="checkbox" id="kahaani_photography" name="culturals" value="photography">
-                    <label for="kahaani_photography">Kahaani - Photography (₹59)</label>
+                <legend>Select Your Culturals</legend>
+                <div class="container">
+                    <div class="row">
+                        {% for cultural in cultural_names %}
+                        <div class="col-md-6">
+                            <h4>{{ cultural }}</h4>
+                            {% for category in cultural_categories[cultural] %}
+                            <div class="form__group" >
+                                <input  type="checkbox" id="{{ cultural_name_data[cultural] }}" name="culturals" value="{{ cultural }}-{{ category }}">
+                                <label for="{{ category }}">{{ category }} ₹{{ cultural_name_data[cultural][category]["price"] }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </fieldset>
             {% endif %}
 
             {% if 'management' in chosen_categories %}
-            <fieldset>
+            <!-- <fieldset>
                 <legend>Select Your Management Event</legend>
                 <h4>Management Events</h4>
+                
                 <div class="form__group">
                     <input type="checkbox" id="marcurious" name="management" value="marcurious">
                     <label for="marcurious">Marcurious (₹590)</label>
@@ -210,6 +157,25 @@
                 <div class="form__group">
                     <input type="checkbox" id="mystery_maze" name="management" value="mystery-maze">
                     <label for="mystery_maze">Mystery Maze (₹826)</label>
+                </div>
+            </fieldset> -->
+
+            <fieldset>
+                <legend>Select Your Management Events</legend>
+                <div class="container">
+                    <div class="row">
+                        {% for management in management_names %}
+                        <div class="col-md-6">
+                            <h4>{{ management }}</h4>
+                            {% for category in management_categories[management] %}
+                            <div class="form__group" >
+                                <input  type="checkbox" id="{{ management_name_data[management] }}" name="management" value="{{ management }}-{{ category }}">
+                                <label for="{{ category }}">{{ category }} ₹{{ management_name_data[management][category]["price"] }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </fieldset>
             {% endif %}

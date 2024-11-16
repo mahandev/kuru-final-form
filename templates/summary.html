@@ -52,24 +52,26 @@
                     <tbody>
                         {% for sport in chosen_sports %}
                             <tr>
-                                <td>{{ sport_names[sport] }}</td>
+                                <td>{{ sport }}</td>
                                 <td>{{ costs[sport] }}</td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <div class="row mb-4">
-                                        <div class="col-md-6">
-                                            <h5>Managers</h5>
-                                            <div id="managerContainer{{ sport }}">
-                                                <button type="button" class="btn btn-primary" onclick="addManager('{{ sport }}')">Add Manager</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h5>Participants</h5>
-                                            <div id="participantContainer{{ sport }}">
-                                                <button type="button" class="btn btn-primary" onclick="addParticipant('{{ sport }}')">Add Participant</button>
-                                            </div>
-                                        </div>
+                                    <div class="form-group">
+                                        <label>Participant Name:</label>
+                                        <input type="text" name="participantName{{sport}}[]" class="form-control" required>
+                                        <label>Participant Phone:</label>
+                                        <input type="text" name="participantPhone{{sport}}[]" class="form-control" required>
+                                        <label>Participant Image:</label>
+                                        <input type="file" name="participantImage{{sport}}[]" class="form-control-file" accept="image/*" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Manager Name:</label>
+                                        <input type="text" name="managerName${{sport}}[]" class="form-control" required>
+                                        <label>Manager Phone:</label>
+                                        <input type="text" name="managerPhone${{sport}}[]" class="form-control" required>
+                                        <label>Manager Image:</label>
+                                        <input type="file" name="managerImage${{sport}}[]" class="form-control-file" accept="image/*" required>
                                     </div>
                                 </td>
                             </tr>
@@ -78,7 +80,7 @@
                 </table>
             {% endif %}
 
-            {% if chosen_culturals %}
+            <!-- {% if chosen_culturals %}
                 <h2>Chosen Cultural Events:</h2>
                 <table class="table table-striped">
                     <thead>
@@ -90,7 +92,7 @@
                     <tbody>
                         {% for cultural in chosen_culturals %}
                             <tr>
-                                <td>{{ cultural_names[cultural] }}</td>
+                                <td>{{ cultural }}</td>
                                 <td>{{ costs[cultural] }}</td>
                             </tr>
                             <tr>
@@ -128,7 +130,7 @@
                     <tbody>
                         {% for management in chosen_management %}
                             <tr>
-                                <td>{{ management_names[management] }}</td>
+                                <td>{{ management }}</td>
                                 <td>{{ costs[management] }}</td>
                             </tr>
                             <tr>
@@ -152,7 +154,7 @@
                         {% endfor %}
                     </tbody>
                 </table>
-            {% endif %}
+            {% endif %} -->
 
             <h3>Total Cost: ₹{{ total_cost }}</h3>
             <button type="submit" class="btn btn-primary">Submit All Events</button>

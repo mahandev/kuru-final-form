@@ -6,6 +6,8 @@ from bson.objectid import ObjectId
 from bson import Binary
 from bson import json_util
 from sports_name_data import sports_name_data
+from cultural_name_data import cultural_name_data
+from management_name_data import management_name_data
 import json
 load_dotenv()
 
@@ -21,101 +23,13 @@ users_collection = db['Users']
 managers_collection = db['Managers']
 participants_collection = db['Participants']
 
-costs = {
-    "badminton-men-single": 472,
-    "badminton-men-double": 826,
-    "badminton-mixed-double": 826,
-    "basketball-women": 5074,
-    "basketball-men": 5074,
-    "frisbee-open": 5310,
-    "handball-women": 1180,
-    "handball-male": 1180,
-    "sqaush-women-single": 413,
-    "swimming-4x50-relay-freestyle-men": 708,
-    "swimming-4x50-relay-freestyle-women": 708,
-    "swimming-50m-freestyle-men": 295,
-    "swimming-50m-backstroke-men": 295,
-    "swimming-50m-breaststroke-men": 295,
-    "swimming-50m-butterfly-men": 295,
-    "swimming-50m-freestyle-women": 295,
-    "swimming-50m-backstroke-women": 295,
-    "swimming-50m-breaststroke-women": 295,
-    "swimming-50m-butterfly-women": 295,
-    "table-tennis-mens-team": 1180,
-    "table-tennis-womens-team": 1003,
-    "table-tennis-mens-doubles": 295,
-    "table-tennis-mixed-doubles": 295,
-    "tennis-mens-singles": 472,
-    "tennis-mens-doubles": 826,
-    "tennis-mixed-doubles": 826,
-    "sprints-100m-male": 212,
-    "volleyball-male": 2596,
-    "volleyball-women": 1534,
-    "chess-open": 319,
-    "snooker-open": 354,
-    "rhythm-solo-dance": 295,
-    "step-off-group-dance": 1180,
-    "group-dance-classical": 1180,
-    "music-solo": 295,
-    "art": 59,
-    "photography": 59,
-    "marcurious": 590,
-    "digi-quest": 590,
-    "bull-bear-brawl": 590,
-    "mystery-maze": 826
-}
-
-single_or_team = {
-    "badminton-men-single": "single",
-    "badminton-men-double": "team",
-    "badminton-mixed-double": "team",
-    "basketball-women": "team",
-    "basketball-men": "team",
-    "frisbee-open": "team",
-    "handball-women": "team",
-    "handball-male": "team",
-    "sqaush-women-single": "single",
-    "swimming-4x50-relay-freestyle-men": "team",
-    "swimming-4x50-relay-freestyle-women": "team",
-    "swimming-50m-freestyle-men": "single",
-    "swimming-50m-backstroke-men": "single",
-    "swimming-50m-breaststroke-men": "single",
-    "swimming-50m-butterfly-men": "single",
-    "swimming-50m-freestyle-women": "single",
-    "swimming-50m-backstroke-women": "single",
-    "swimming-50m-breaststroke-women": "single",
-    "swimming-50m-butterfly-women": "single",
-    "table-tennis-mens-team": "team",
-    "table-tennis-womens-team": "team",
-    "table-tennis-mens-doubles": "team",
-    "table-tennis-mixed-doubles": "team",
-    "tennis-mens-singles": "single",
-    "tennis-mens-doubles": "team",
-    "tennis-mixed-doubles": "team",
-    "sprints-100m-male": "single",
-    "volleyball-male": "team",
-    "volleyball-women": "team",
-    "chess-open": "single",
-    "snooker-open": "single",
-    "rhythm-solo-dance": "single",
-    "step-off-group-dance": "team",
-    "group-dance-classical": "team",
-    "music-solo": "single",
-    "art": "single",
-    "photography": "single",
-    "marcurious": "team",
-    "digi-quest": "team",
-    "bull-bear-brawl": "team",
-    "mystery-maze": "team"
-}
-
-
 def check_if_user_exists():
     if 'user' not in session.keys():
         return redirect(url_for('main'))
 
 @app.route('/')
 def main():
+    
     return render_template('index.html')
 
 @app.route('/submit_user_information', methods=["GET", "POST"])
@@ -144,6 +58,9 @@ def submit_user_information():
 
 @app.route('/choose_areas')
 def choose_areas():
+    sport_names = list(sports_name_data.keys())
+    print(sport_names)
+    # print(sports_name_data[sport]["price"])
     return check_if_user_exists() or render_template('choose_area.html')
 
 @app.route('/area_submit', methods=["GET", "POST"])
@@ -158,8 +75,36 @@ def area_choice():
 
 @app.route('/choose_events', methods=["GET", "POST"])
 def choose_events():
+    sport_names = list(sports_name_data.keys())
+    sport_categories = {}
+    for sport in sport_names:
+        sport_categories[sport]= ([x for x in list(sports_name_data[sport])])
+    cultural_names = list(cultural_name_data.keys())
+    cultural_categories = {}
+    for culturals in cultural_names:
+        cultural_categories[culturals]= ([x for x in list(cultural_name_data[culturals])])
+    # print(cultural_categories)
+    management_names = list(management_name_data.keys())
+    management_categories = {}
+    for management in management_names:
+        management_categories[management]= ([x for x in list(management_name_data[management])])
+    print(management_names)
+    
+        
+    # print(sports_name_data[sport]["price"])
     chosen_areas = session['user']['categories']
-    return render_template('choose_culs_sports_etc.html', chosen_categories=chosen_areas)
+    return render_template('choose_culs_sports_etc.html', 
+                           chosen_categories=chosen_areas,
+                           sports_name_data=sports_name_data, 
+                           sport_names=sport_names, 
+                           sport_categories=sport_categories,
+                           cultural_name_data=cultural_name_data, 
+                           cultural_categories=cultural_categories, 
+                           cultural_names=cultural_names,
+                           management_name_data=management_name_data,
+                           management_names=management_names,
+                           management_categories=management_categories
+                           )
 
 @app.route('/submit', methods=["GET", "POST"])
 def submit():
@@ -176,17 +121,65 @@ def submit():
         cultural_cost = 0
         sports_cost = 0
         management_cost = 0
-        for i in chosen_culturals:
-            cultural_cost += costs[i]
-            user_cost += costs[i]
         
+        costs = {}
+
         for i in chosen_sports:
-            sports_cost += costs[i]
-            user_cost += costs[i]
+            sport, category = i.split('-', 1)
+            sports_cost += sports_name_data[sport][category]["price"]
+            key = category
+            costs[key] = sports_name_data[sport][category]["price"]
+
+
+        for i in chosen_culturals:
+            cultural, category = i.split('-', 1)
+            cultural_cost += cultural_name_data[cultural][category]["price"]
+            key = category
+            costs[key] = cultural_name_data[cultural][category]["price"]
+        
+        
         
         for i in chosen_management:
-            management_cost += costs[i]
-            user_cost += costs[i]
+            management, category = i.split('-', 1)
+            print(management)
+            print(category)
+            management_cost += management_name_data[management][category]["price"]
+            key = category
+            costs[key] = management_name_data[management][category]["price"]
+
+        c_culturals = []
+        c_sports = []
+        c_management = []
+
+        number_of_managers = {}
+        number_of_particpants = {}
+
+        for i in chosen_culturals:
+            c, category = i.split('-', 1)
+            c_culturals.append(category)
+            number_of_particpants[category] = {"min":cultural_name_data[c][category]["min_participants"], "max":cultural_name_data[c][category]["max_participants"]}
+            number_of_managers[category] = {"min":cultural_name_data[c][category]["min_managers"], "max":cultural_name_data[c][category]["max_managers"]}
+        
+        for i in chosen_sports:
+            s, category = i.split('-', 1)
+            c_culturals.append(category)
+            number_of_particpants[category] = {"min":sports_name_data[s][category]["min_participants"], "max":sports_name_data[s][category]["max_participants"]}
+            number_of_managers[category] = {"min":sports_name_data[s][category]["min_managers"], "max":sports_name_data[s][category]["max_managers"]}
+        
+        for i in chosen_management:
+            m, category = i.split('-', 1)
+            c_management.append(category)
+            number_of_particpants[category] = {"min":management_name_data[m][category]["min_participants"], "max":management_name_data[m][category]["max_participants"]}
+            number_of_managers[category] = {"min":management_name_data[m][category]["min_managers"], "max":management_name_data[m][category]["max_managers"]}
+
+
+        
+
+            
+        print(costs)
+
+        user_cost += cultural_cost + sports_cost + management_cost 
+        print(sports_cost, cultural_cost, management_cost, user_cost)
         
         user = session['user']
         if "chosen_sports" in session["user"]: del user["chosen_sports"]
@@ -208,66 +201,12 @@ def submit():
         user["total_cost"] = user_cost
         session["user"] = user
 
-    sport_names = {
-        "badminton-men-single": "Men's Singles (Badminton)",
-        "badminton-men-double": "Men's Doubles (Badminton)",
-        "badminton-mixed-double": "Mixed Doubles (Badminton)",
-        "basketball-women": "Women (Basketball)",
-        "basketball-men": "Men (Basketball)",
-        "frisbee-open": "Open (Frisbee)",
-        "handball-women": "Women (Handball)",
-        "handball-male": "Men (Handball)",
-        "sqaush-women-single": "Women's Singles (Squash)",
-        "swimming-4x50-relay-freestyle-men": "4x50m Relay Freestyle Men (Swimming)",
-        "swimming-4x50-relay-freestyle-women": "4x50m Relay Freestyle Women (Swimming)",
-        "swimming-50m-freestyle-men": "50m Freestyle Men (Swimming)",
-        "swimming-50m-backstroke-men": "50m Backstroke Men (Swimming)",
-        "swimming-50m-breaststroke-men": "50m Breaststroke Men (Swimming)",
-        "swimming-50m-butterfly-men": "50m Butterfly Men (Swimming)",
-        "swimming-50m-freestyle-women": "50m Freestyle Women (Swimming)",
-        "swimming-50m-backstroke-women": "50m Backstroke Women (Swimming)",
-        "swimming-50m-breaststroke-women": "50m Breaststroke Women (Swimming)",
-        "swimming-50m-butterfly-women": "50m Butterfly Women (Swimming)",
-        "table-tennis-mens-team": "Men's Team (Table Tennis)",
-        "table-tennis-womens-team": "Women's Team (Table Tennis)",
-        "table-tennis-mens-doubles": "Men's Doubles (Table Tennis)",
-        "table-tennis-mixed-doubles": "Mixed Doubles (Table Tennis)",
-        "tennis-mens-singles": "Men's Singles (Tennis)",
-        "tennis-mens-doubles": "Men's Doubles (Tennis)",
-        "tennis-mixed-doubles": "Mixed Doubles (Tennis)",
-        "sprints-100m-male": "Sprints - 100m Male (Athletics)",
-        "volleyball-male": "Men (Volleyball)",
-        "volleyball-women": "Women (Volleyball)",
-        "chess-open": "Open (Chess)",
-        "snooker-open": "Open (Snooker)"
-    }
-
-    cultural_names = {
-        "rhythm-solo-dance": "Rhythm - Solo Dance",
-        "step-off-group-dance": "Step Off - Group Dance",
-        "group-dance-classical": "Natyanjali - Group Dance Classical",
-        "music-solo": "Spotlight - Music Solo",
-        "art": "Pixelate - Art",
-        "photography": "Kahaani - Photography"
-    }
-
-    management_names = {
-        "marcurious": "Marcurious",
-        "digi-quest": "Digi Quest",
-        "bull-bear-brawl": "Bull & Bear Brawl",
-        "mystery-maze": "Mystery Maze"
-    }
-
-
+        
     return render_template('summary.html', 
-                           chosen_sports=chosen_sports, 
-                           chosen_culturals=chosen_culturals,
-                           chosen_management=chosen_management,
-                           total_cost=user_cost,
-                           costs=costs,
-                           sport_names=sport_names,
-                           cultural_names=cultural_names,
-                           management_names=management_names)
+                           chosen_sports=c_sports, 
+                           chosen_culturals=c_culturals,
+                           chosen_management=c_management,
+                           total_cost=user_cost,costs=costs,number_of_particpants=number_of_particpants, number_of_managers=number_of_managers)
 
 from flask import jsonify, request, session
 from bson.objectid import ObjectId
@@ -340,7 +279,6 @@ def management_particpant_submit():
     users_collection.insert_one(user).inserted_id
     session['user'] = json.loads(json_util.dumps(user))
     return session['user']
-    return ""
 
 
 
