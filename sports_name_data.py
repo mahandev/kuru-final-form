@@ -205,7 +205,7 @@ sports_name_data = {
     "Zumba":{
     "Zumba Masterclass [Open]": {
         "gender": "open",
-        "price": 300,
+        "price": 301,
         "event_type": "single",
         "min_participants": 1,
         "max_participants": 1,
