@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FLAME Kurukshetra 2025 Registration Form</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
@@ -20,15 +20,19 @@
   <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'kurukshetra.png') }}">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-black">
-    <div class="flex flex-col justify-center items-center h-screen">
+<body style="font-family: Oswald;" class="bg-black">
+  
+    <div class="flex flex-col mt-16 justify-center items-center h-screen">
+        <div class="flex justify-between items-center p-6 header-img-logo">
+            <img class="w-[320px] md:w-[475px]" src="{{ url_for('static', filename = 'logo.png') }}" alt="Kurukshetra 2025">
+        </div>
       <div
         class="border-x border-y p-8 rounded-lg drop-shadow-lg border-slate-400 flex flex-col max-w-[500px] justify-between p-4 leading-normal bg-[#1E1E1E]"
       >
     <form action="{{ url_for('submit_user_information') }}" method="post" class="max-w-lg mx-auto flex flex-col gap-6 justify-between">
 
         <h1 class="text-4xl md:text-5xl font-extrabold text-white">
-            User Registration
+            FLAME Kurukshetra 2025
           </h1>
         <div class="flex flex-col gap-4">
             <div class="flex flex-col gap-2">

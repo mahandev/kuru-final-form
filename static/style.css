@@ -1,3 +1,10 @@
 * {
-    font-family: "Oswald", serif;
+  font-family: "Oswald", serif;
+}
+
+.header-img-logo {
+  img {
+    width: 475px;
+    /* height: 475px; */
+  }
 }

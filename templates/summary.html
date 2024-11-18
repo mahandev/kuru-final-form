@@ -4,11 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FLAME Kurukshetra 2025 Registration Form</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'kurukshetra.png') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename = 'kurukshetra.png') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename = 'style.css') }}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -20,7 +30,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body style="font-family: Oswald" class="bg-black">
-    <div class="flex flex-col justify-center items-center h-max">
+    <div class="flex flex-col">
+      <div class="flex flex-col mt-16 justify-center items-center">
+        <div class="flex justify-between items-center p-6 header-img-logo">
+            <img class="w-[320px] md:w-[475px]" src="{{ url_for('static', filename = 'logo.png') }}" alt="Kurukshetra 2025">
+        </div>
       <div
         class="border-x border-y p-8 rounded-lg drop-shadow-lg border-slate-400 flex flex-col max-w-[900px] justify-between items-center p-4 leading-normal bg-[#1E1E1E]"
       >
@@ -46,6 +60,8 @@
               </tr>
             </thead>
             <tbody>
+
+
               {% for sport in chosen_sports %}
               <!-- <div class="parti flex flex-col gap-4"> -->
               <tr class="p-4 font-semibold bg-[#FF5F1F]">
@@ -55,6 +71,7 @@
               <tr>
                 <td colspan="2">
                   <!-- Min participants -->
+                  
                   {% for i in range(0, number_of_particpants[sport]["min"]) %}
                   <div class="flex flex-col form-group mb-8">
                     <!-- <label class="block mb-2 text-sm font-medium text-white">Participant Name:</label> -->
