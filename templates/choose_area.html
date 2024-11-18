@@ -1,75 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sport Selection</title>
-    <style>
-        body {
-            font-family: "Open Sans", sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #000000;
-            color: #ffffff;
-        }
-        form {
-            background-color: #000000;
-            border-radius: 0.5rem;
-            padding: 2rem;
-            box-shadow: 0 2px 10px rgba(255, 165, 0, 0.5);
-        }
-        h3 {
-            margin-bottom: 1rem;
-            color: #ff6600;
-        }
-        .form__group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        input[type="checkbox"] {
-            margin-right: 0.5rem;
-        }
-        input[type="submit"] {
-            padding: 0.5rem 1rem;
-            background-color: #ff6600;
-            border: none;
-            border-radius: 0.25rem;
-            color: #000000;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        input[type="submit"]:hover {
-            background-color: #cc5200;
-        }
-    </style>
-    
-</head>
-<body>
-
-    <form action="{{ url_for('area_choice') }}" method="post">
-        <h3>Select Your Favorite Areas</h3>
-        
-        <div class="form__group">
-            <input type="checkbox" name="areas" value="sports" id="sports">
-            <label for="sports">Sports</label>
-        </div>
-        
-        <div class="form__group">
-            <input type="checkbox" name="areas" value="culturals" id="culturals">
-            <label for="culturals">Culturals</label>
-        </div>
-        
-        <div class="form__group">
-            <input type="checkbox" name="areas" value="management" id="management">
-            <label for="management">Management</label>
-        </div>
-        
-        <input type="submit" value="Submit">
-    </form>
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FLAME Kurukshetra 2025 Registration Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'kurukshetra.png') }}">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-black" style="font-family: Oswald;">
+    <div class="flex flex-col justify-center items-center h-screen">
+      <div
+        class="border-x border-y p-8 rounded-lg drop-shadow-lg border-slate-400 flex flex-col max-w-[500px] justify-between p-4 leading-normal bg-[#1E1E1E]"
+      >
+        <form
+          action="{{ url_for('area_choice') }}"
+          method="post"
+          class="max-w-lg mx-auto flex flex-col gap-6 justify-between"
+        >
+          <h1 class="text-4xl md:text-5xl font-extrabold text-white">
+            Select Your Favorite Areas
+          </h1>
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-2">
+              <div class="mb-5">
+                <input
+                  type="checkbox"
+                  name="areas"
+                  value="sports"
+                  id="sports"
+                  class="w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="sports"
+                  class="mb-2 ml-2 text-md font-medium text-white"
+                  >Sports</label
+                >
+              </div>
+              <div class="mb-5">
+                <input
+                  type="checkbox"
+                  name="areas"
+                  value="culturals"
+                  id="culturals"
+                  class="w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="culturals"
+                  class="mb-2 ml-2 text-md font-medium text-white"
+                  >Culturals</label
+                >
+              </div>
+              <div class="mb-5">
+                <input
+                  type="checkbox"
+                  name="areas"
+                  value="management"
+                  id="management"
+                  class="w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="management"
+                  class="mb-2 ml-2 text-md font-medium text-white"
+                  >Management</label
+                >
+              </div>
+            </div>
+            <input
+              type="submit"
+              value="Next"
+              class="cursor-pointer text-white text-center focus:bg-[#ff51f] focus:ring-1 focus:outline-none focus:ring-[#FF7F50] rounded-lg text-lg font-medium px-5 py-4 text-center bg-[#FF5F1F] hover:bg-[#EC5800] me-2 mb-2"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+  </body>
 </html>

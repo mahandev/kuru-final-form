@@ -1,244 +1,486 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Summary</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #000000;
-            color: #ffffff;
-        }
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #333333;
-        }
-        .table-striped tbody tr:nth-of-type(even) {
-            background-color: #444444;
-        }
-        h1, h2, h3, h4, h5 {
-            color: #ff6600;
-        }
-        .btn-primary {
-            background-color: #ff6600;
-            border-color: #ff6600;
-        }
-        .btn-primary:hover {
-            background-color: #cc5200;
-            border-color: #cc5200;
-        }
-        .form-control, .form-control-file {
-            border-radius: 0.25rem;
-        }
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-    </style>
-</head>
-<body>
-    <div class="container mt-5">
-        <h1 class="mb-4">Event Summary</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FLAME Kurukshetra 2025 Registration Form</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'kurukshetra.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body style="font-family: Oswald" class="bg-black">
+    <div class="flex flex-col justify-center items-center h-max">
+      <div
+        class="border-x border-y p-8 rounded-lg drop-shadow-lg border-slate-400 flex flex-col max-w-[900px] justify-between items-center p-4 leading-normal bg-[#1E1E1E]"
+      >
+        <h1 class="text-4xl md:text-5xl mb-4 font-extrabold text-white">
+          Events Summary
+        </h1>
 
-        <form action="{{ url_for('management_particpant_submit') }}" method="POST" enctype="multipart/form-data">
-                <h2>Chosen Sports:</h2>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Event</th>
-                            <th>Cost (₹)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for sport in chosen_sports %}
-                            <tr>
-                                <td>{{ sport }}</td>
-                                <td>{{ costs[sport] }}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    {% for i in range(0, number_of_particpants[sport]["min"]) %}
-                                    <div class="form-group">
-                                        <label>Participant Name:</label>
-                                        <input type="text" name="participantName{{sport}}[]" class="form-control" required>
-                                        <label>Participant Phone:</label>
-                                        <input type="text" name="participantPhone{{sport}}[]" class="form-control" required>
-                                        <label>Participant Image:</label>
-                                        <input type="file" name="participantImage{{sport}}[]" class="form-control-file" accept="image/*" required>
-                                    </div>
-                                    {%endfor%}
-                                    {% for i in range(0, (number_of_particpants[sport]["max"] - number_of_particpants[sport]["min"])) %}
-                                    <div class="form-group">
-                                        <label>Participant Name:</label>
-                                        <input type="text" name="participantName{{sport}}[]" class="form-control" style="background-color: red;">
-                                        <label>Participant Phone:</label>
-                                        <input type="text" name="participantPhone{{sport}}[]" class="form-control" style="background-color: red;">
-                                        <label>Participant Image:</label>
-                                        <input type="file" name="participantImage{{sport}}[]" class="form-control-file" accept="image/*" style="background-color: red;">
-                                    </div>
-                                    {% endfor %}
-                                    {% for i in range(0, number_of_managers[sport]["min"]) %}
-                                    <div class="form-group">
-                                        <label>Manager Name:</label>
-                                        <input type="text" name="managerName{{sport}}[]" class="form-control" required>
-                                        <label>Manager Phone:</label>
-                                        <input type="text" name="managerPhone{{sport}}[]" class="form-control" required>
-                                        <label>Manager Image:</label>
-                                        <input type="file" name="managerImage{{sport}}[]" class="form-control-file" accept="image/*" required>
-                                    </div>
-                                    {%endfor%}
-                                    {% for i in range(0, (number_of_managers[sport]["max"] - number_of_managers[sport]["min"])) %}
-                                    <div class="form-group">
-                                        <label>Manager Name:</label>
-                                        <input type="text" name="managerName{{sport}}[]" class="form-control" style="background-color: red;">
-                                        <label>Manager Phone:</label>
-                                        <input type="text" name="managerPhone{{sport}}[]" class="form-control" style="background-color: red;">
-                                        <label>Manager Image:</label>
-                                        <input type="file" name="managerImage{{sport}}[]" class="form-control-file" accept="image/*" style="background-color: red;">
-                                    </div>
-                                    {% endfor %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        <form
+          action="{{ url_for('management_particpant_submit') }}"
+          method="POST"
+          enctype="multipart/form-data"
+          class="md:w-[600px]"
+        >
+          <h2 class="text-lg mb-2 font-medium text-[#FF5F1F]">
+            Chosen Sports:
+          </h2>
 
-            {% if chosen_culturals %}
-                <h2>Chosen Cultural Events:</h2>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Event</th>
-                            <th>Cost (₹)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for cultural in chosen_culturals %}
-                            <tr>
-                                <td>{{ cultural }}</td>
-                                <td>{{ costs[cultural] }}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    {% for i in range(0, number_of_particpants[cultural]["min"]) %}
-                                    <div class="form-group">
-                                        <label>Participant Name:</label>
-                                        <input type="text" name="participantName{{cultural}}[]" class="form-control" required>
-                                        <label>Participant Phone:</label>
-                                        <input type="text" name="participantPhone{{cultural}}[]" class="form-control" required>
-                                        <label>Participant Image:</label>
-                                        <input type="file" name="participantImage{{cultural}}[]" class="form-control-file" accept="image/*" required>
-                                    </div>
-                                    {%endfor%}
-                                    {% for i in range(0, (number_of_particpants[cultural]["max"] - number_of_particpants[cultural]["min"])) %}
-                                    <div class="form-group">
-                                        <label>Participant Name:</label>
-                                        <input type="text" name="participantName{{cultural}}[]" class="form-control" style="background-color: red;">
-                                        <label>Participant Phone:</label>
-                                        <input type="text" name="participantPhone{{cultural}}[]" class="form-control" style="background-color: red;">
-                                        <label>Participant Image:</label>
-                                        <input type="file" name="participantImage{{cultural}}[]" class="form-control-file" accept="image/*" style="background-color: red;">
-                                    </div>
-                                    {% endfor %}
-                                    {% for i in range(0, number_of_managers[cultural]["min"]) %}
-                                    <div class="form-group">
-                                        <label>Manager Name:</label>
-                                        <input type="text" name="managerName{{cultural}}[]" class="form-control" required>
-                                        <label>Manager Phone:</label>
-                                        <input type="text" name="managerPhone{{cultural}}[]" class="form-control" required>
-                                        <label>Manager Image:</label>
-                                        <input type="file" name="managerImage{{cultural}}[]" class="form-control-file" accept="image/*" required>
-                                    </div>
-                                    {%endfor%}
-                                    {% for i in range(0, (number_of_managers[cultural]["max"] - number_of_managers[cultural]["min"])) %}
-                                    <div class="form-group">
-                                        <label>Manager Name:</label>
-                                        <input type="text" name="managerName{{cultural}}[]" class="form-control" style="background-color: red;">
-                                        <label>Manager Phone:</label>
-                                        <input type="text" name="managerPhone{{cultural}}[]" class="form-control" style="background-color: red;">
-                                        <label>Manager Image:</label>
-                                        <input type="file" name="managerImage{{cultural}}[]" class="form-control-file" accept="image/*" style="background-color: red;">
-                                    </div>
-                                    {% endfor %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% endif %}
+          <table class="text-white w-full table table-striped">
+            <thead>
+              <tr class="bg-black">
+                <th class="px-4 py-2 text-left">Event</th>
+                <th class="px-4">Cost (₹)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for sport in chosen_sports %}
+              <!-- <div class="parti flex flex-col gap-4"> -->
+              <tr class="p-4 font-semibold bg-[#FF5F1F]">
+                <td class="px-4 py-2 text-left">{{ sport }}</td>
+                <td class="text-center">{{ costs[sport] }}</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <!-- Min participants -->
+                  {% for i in range(0, number_of_particpants[sport]["min"]) %}
+                  <div class="flex flex-col form-group mb-8">
+                    <!-- <label class="block mb-2 text-sm font-medium text-white">Participant Name:</label> -->
+                    <input
+                      type="text"
+                      name="participantName{{sport}}[]"
+                      class="form-control rounded-none my-2 rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      required
+                      placeholder="Participant Name:"
+                    />
+                    <!-- <label class="block mb-2 text-sm font-medium text-white">Participant Phone:</label> -->
+                    <input
+                      type="text"
+                      name="participantPhone{{sport}}[]"
+                      class="form-control rounded-none my-2 rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      required
+                      placeholder="Participant Phone:"
+                    />
+                    <!-- <label class="block mb-2 text-sm font-medium text-white">Participant Image:</label> -->
+                    <input
+                      type="file"
+                      name="participantImage{{sport}}[]"
+                      class="form-control-file rounded-none my-2 rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      accept="image/*"
+                      required
+                      placeholder="Participant Image:"
+                    />
+                  </div>
+                  <!-- Max participants -->
+                  {%endfor%} {% for i in range(0,
+                  (number_of_particpants[sport]["max"] -
+                  number_of_particpants[sport]["min"])) %}
+                  <div class="flex flex-col mb-8 form-group">
+                    <label>Optional field:</label>
+                    <input
+                      type="text"
+                      name="participantName{{sport}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Participant Name:"
+                    />
+                    <!-- <label>Participant Phone:</label> -->
+                    <input
+                      type="text"
+                      name="participantPhone{{sport}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Participant Phone:"
+                    />
+                    <!-- <label>Participant Image:</label> -->
+                    <input
+                      type="file"
+                      name="participantImage{{sport}}[]"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      accept="image/*"
+                    />
+                  </div>
+                  <!-- Min managers -->
+                  {% endfor %} {% for i in range(0,
+                  number_of_managers[sport]["min"]) %}
+                  <div class="flex flex-col mb-8 form-group">
+                    <!-- <label>:</label> -->
+                    <input
+                      type="text"
+                      name="managerName{{sport}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Manager Name"
+                      required
+                    />
+                    <!-- <label>Manager Phone:</label> -->
+                    <input
+                      type="text"
+                      name="managerPhone{{sport}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Manager Phone"
+                      required
+                    />
+                    <!-- <label>Manager Image:</label> -->
+                    <input
+                      type="file"
+                      name="managerImage{{sport}}[]"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      accept="image/*"
+                      required
+                    />
+                  </div>
 
-            {% if chosen_management %}
-                <h2>Chosen Management Events:</h2>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Event</th>
-                            <th>Cost (₹)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for management in chosen_management %}
-                            <tr>
-                                <td>{{ management }}</td>
-                                <td>{{ costs[management] }}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    {% for i in range(0, number_of_particpants[management]["min"]) %}
-                                    <div class="form-group">
-                                        <label>Participant Name:</label>
-                                        <input type="text" name="participantName{{management}}[]" class="form-control" required>
-                                        <label>Participant Phone:</label>
-                                        <input type="text" name="participantPhone{{management}}[]" class="form-control" required>
-                                        <label>Participant Image:</label>
-                                        <input type="file" name="participantImage{{management}}[]" class="form-control-file" accept="image/*" required>
-                                    </div>
-                                    {%endfor%}
-                                    {% for i in range(0, (number_of_particpants[management]["max"] - number_of_particpants[management]["min"])) %}
-                                    <div class="form-group">
-                                        <label>Participant Name:</label>
-                                        <input type="text" name="participantName{{management}}[]" class="form-control" style="background-color: red;">
-                                        <label>Participant Phone:</label>
-                                        <input type="text" name="participantPhone{{management}}[]" class="form-control" style="background-color: red;">
-                                        <label>Participant Image:</label>
-                                        <input type="file" name="participantImage{{management}}[]" class="form-control-file" accept="image/*" style="background-color: red;">
-                                    </div>
-                                    {% endfor %}
-                                    {% for i in range(0, number_of_managers[management]["min"]) %}
-                                    <div class="form-group">
-                                        <label>Manager Name:</label>
-                                        <input type="text" name="managerName{{management}}[]" class="form-control" required>
-                                        <label>Manager Phone:</label>
-                                        <input type="text" name="managerPhone{{management}}[]" class="form-control" required>
-                                        <label>Manager Image:</label>
-                                        <input type="file" name="managerImage{{management}}[]" class="form-control-file" accept="image/*" required>
-                                    </div>
-                                    {%endfor%}
-                                    {% for i in range(0, (number_of_managers[management]["max"] - number_of_managers[management]["min"])) %}
-                                    <div class="form-group">
-                                        <label>Manager Name:</label>
-                                        <input type="text" name="managerName{{management}}[]" class="form-control" style="background-color: red;">
-                                        <label>Manager Phone:</label>
-                                        <input type="text" name="managerPhone{{management}}[]" class="form-control" style="background-color: red;">
-                                        <label>Manager Image:</label>
-                                        <input type="file" name="managerImage{{management}}[]" class="form-control-file" accept="image/*" style="background-color: red;">
-                                    </div>
-                                    {% endfor %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% endif %}
+                  <!-- Max managers -->
+                  {%endfor%} {% for i in range(0,
+                  (number_of_managers[sport]["max"] -
+                  number_of_managers[sport]["min"])) %}
+                  <div class="flex flex-col mb-8 form-group">
+                    <label>Optional field:</label>
+                    <input
+                      type="text"
+                      name="managerName{{sport}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Manager Name:"
+                    />
+                    <!-- <label>Manager Phone:</label> -->
+                    <input
+                      type="text"
+                      name="managerPhone{{sport}}[]"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Manager Phone:"
+                    />
+                    <!-- <label>Manager Image:</label> -->
+                    <input
+                      type="file"
+                      name="managerImage{{sport}}[]"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      accept="image/*"
+                      placeholder="Manager Image:"
+                    />
+                  </div>
+                  {% endfor %}
+                </td>
+                <!-- </div> -->
+                {% endfor %}
+              </tr>
+            </tbody>
+          </table>
 
-            <h3>Total Cost: ₹{{ total_cost }}</h3>
-            <button type="submit" class="btn btn-primary">Submit All Events</button>
+          {% if chosen_culturals %}
+          <h2 class="text-lg mb-2 font-medium text-[#FF5F1F]">
+            Chosen Cultural Events:
+          </h2>
+          <table class="text-white w-full table table-striped">
+            <thead>
+              <tr class="bg-black">
+                <th class="px-4 py-2 text-left">Event</th>
+                <th class="px-4">Cost (₹)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for cultural in chosen_culturals %}
+              <!-- <div class="parti flex flex-col gap-4"> -->
+              <tr class="p-4 font-semibold bg-[#FF5F1F]">
+                <td class="px-4 py-2 text-left">{{ cultural }}</td>
+                <td class="text-center">{{ costs[cultural] }}</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  {% for i in range(0, number_of_particpants[cultural]["min"])
+                  %}
+                  <div class="flex flex-col form-group mb-8">
+                    <!-- <label>Participant Name:</label> -->
+                    <input
+                      type="text"
+                      name="participantName{{cultural}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Participant Name:"
+                      required
+                    />
+                    <!-- <label>Participant Phone:</label> -->
+                    <input
+                      type="text"
+                      name="participantPhone{{cultural}}[]"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Participant Phone:"
+                      required
+                    />
+                    <label>Participant Image:</label>
+                    <input
+                      type="file"
+                      name="participantImage{{cultural}}[]"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      accept="image/*"
+                      placeholder="Participant Image:"
+                      required
+                    />
+                  </div>
+
+                  {%endfor%} {% for i in range(0,
+                  (number_of_particpants[cultural]["max"] -
+                  number_of_particpants[cultural]["min"])) %}
+                  <div class="flex flex-col form-group mb-8">
+                    <label>Optional field:</label>
+                    <input
+                      type="text"
+                      name="participantName{{cultural}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Participant Name:"
+                    />
+                    <!-- <label>Participant Phone:</label> -->
+                    <input
+                      type="text"
+                      name="participantPhone{{cultural}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Participant Phone:"
+                    />
+                    <!-- <label>Participant Image:</label> -->
+                    <input
+                      type="file"
+                      name="participantImage{{cultural}}[]"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      accept="image/*"
+                      placeholder="Participant Image:"
+                    />
+                  </div>
+                  {% endfor %} {% for i in range(0,
+                  number_of_managers[cultural]["min"]) %}
+                  <div class="flex flex-col form-group mb-8">
+                    <!-- <label>Manager Name:</label> -->
+                    <input
+                      type="text"
+                      name="managerName{{cultural}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Manager Name:"
+                      required
+                    />
+                    <!-- <label>Manager Phone:</label> -->
+                    <input
+                      type="text"
+                      name="managerPhone{{cultural}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Manager Phone:"
+                      required
+                    />
+                    <!-- <label>Manager Image:</label> -->
+                    <input
+                      type="file"
+                      name="managerImage{{cultural}}[]"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      accept="image/*"
+                      placeholder="Manager Image:"
+                      required
+                    />
+                  </div>
+                  {%endfor%} {% for i in range(0,
+                  (number_of_managers[cultural]["max"] -
+                  number_of_managers[cultural]["min"])) %}
+                  <div class="flex flex-col form-group mb-8">
+                    <label>Optional field:</label>
+                    <input
+                      type="text"
+                      name="managerName{{cultural}}[]"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Manager Name:"
+                    />
+                    <!-- <label>Manager Phone:</label> -->
+                    <input
+                      type="text"
+                      name="managerPhone{{cultural}}[]"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Manager Phone:"
+                    />
+                    <!-- <label>Manager Image:</label> -->
+                    <input
+                      type="file"
+                      name="managerImage{{cultural}}[]"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Manager Image:"
+                      accept="image/*"
+                    />
+                  </div>
+                  {% endfor %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% endif %} {% if chosen_management %}
+          <h2 class="text-lg mb-2 font-medium text-[#FF5F1F]">
+            Chosen Management Events:
+          </h2>
+          <table class="text-white w-full table table-striped">
+            <thead>
+              <tr class="bg-black">
+                <th class="px-4 py-2 text-left">Event</th>
+                <th class="px-4">Cost (₹)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for management in chosen_management %}
+              <tr class="p-4 font-semibold bg-[#FF5F1F]">
+                <td class="px-4 py-2 text-left">{{ management }}</td>
+                <td class="text-center">{{ costs[management] }}</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  {% for i in range(0, number_of_particpants[management]["min"])
+                  %}
+                  <div class="flex flex-col form-group mb-8">
+                    <!-- <label>Participant Name:</label> -->
+                    <input
+                      type="text"
+                      name="participantName{{management}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Participant Name:"
+                      required
+                    />
+                    <!-- <label>Participant Phone:</label> -->
+                    <input
+                      type="text"
+                      name="participantPhone{{management}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Participant Phone:"
+                      required
+                    />
+                    <!-- <label>Participant Image:</label> -->
+                    <input
+                      type="file"
+                      name="participantImage{{management}}[]"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Participant Image:"
+                      accept="image/*"
+                      required
+                    />
+                  </div>
+                  {%endfor%} {% for i in range(0,
+                  (number_of_particpants[management]["max"] -
+                  number_of_particpants[management]["min"])) %}
+                  <div class="flex flex-col form-group mb-8">
+                    <!-- <label>Participant Name:</label> -->
+                    <input
+                      type="text"
+                      name="participantName{{management}}[]"
+                      placeholder="Participant Name:"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Participant Name:"
+                    />
+                    <!-- <label>Participant Phone:</label> -->
+                    <input
+                      type="text"
+                      name="participantPhone{{management}}[]"
+                      placeholder="Participant Phone:"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Participant Phone:"
+                    />
+                    <!-- <label>Participant Image:</label> -->
+                    <input
+                      type="file"
+                      name="participantImage{{management}}[]"
+                      placeholder="Participant Image:"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      accept="image/*"
+                      placeholder="Participant Image:"
+                    />
+                  </div>
+                  {% endfor %} {% for i in range(0,
+                  number_of_managers[management]["min"]) %}
+                  <div class="flex flex-col mb-8 form-group">
+                    <!-- <label>Manager Name:</label> -->
+                    <input
+                      type="text"
+                      name="managerName{{management}}[]"
+                      placeholder="Manager Name:"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      required
+                    />
+                    <!-- <label>Manager Phone:</label> -->
+                    <input
+                      type="text"
+                      name="managerPhone{{management}}[]"
+                      placeholder="Manager Phone:"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      required
+                    />
+                    <!-- <label>Manager Image:</label> -->
+                    <input
+                      type="file"
+                      name="managerImage{{management}}[]"
+                      placeholder="Manager Image:"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      accept="image/*"
+                      required
+                    />
+                  </div>
+                  {%endfor%} {% for i in range(0,
+                  (number_of_managers[management]["max"] -
+                  number_of_managers[management]["min"])) %}
+                  <div class="flex flex-col form-group mb-8">
+                    <label>Optional field:</label>
+                    <input
+                      type="text"
+                      name="managerName{{management}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Manager Name:"
+                    />
+                    <!-- <label>Manager Phone:</label> -->
+                    <input
+                      type="text"
+                      name="managerPhone{{management}}[]"
+                      class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Manager Phone:"
+                    />
+                    <!-- <label>Manager Image:</label> -->
+                    <input
+                      type="file"
+                      name="managerImage{{management}}[]"
+                      class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Manager Image:"
+                      accept="image/*"
+                    />
+                  </div>
+                  {% endfor %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% endif %}
+
+          <h2 class="text-lg mb-2 font-medium text-[#FF5F1F]">
+            Total Cost: ₹{{ total_cost }}
+          </h2>
+
+          <button
+            type="submit"
+            class="cursor-pointer text-white text-center focus:bg-[#ff51f] focus:ring-1 focus:outline-none focus:ring-[#FF7F50] rounded-lg text-lg font-medium px-5 py-4 text-center bg-[#FF5F1F] hover:bg-[#EC5800] me-2 mb-2"
+          >
+            Submit All Events
+          </button>
+          <!-- </form> -->
         </form>
+      </div>
+      <!-- </div> -->
     </div>
 
     <script>
-        function addManager(event) {
-            const managerContainer = document.getElementById('managerContainer' + event);
-            managerContainer.insertAdjacentHTML('beforeend', `
+      function addManager(event) {
+        const managerContainer = document.getElementById(
+          "managerContainer" + event
+        );
+        managerContainer.insertAdjacentHTML(
+          "beforeend",
+          `
                 <div class="form-group">
                     <label>Manager Name:</label>
                     <input type="text" name="managerName${event}[]" class="form-control" required>
@@ -247,12 +489,17 @@
                     <label>Manager Image:</label>
                     <input type="file" name="managerImage${event}[]" class="form-control-file" accept="image/*" required>
                 </div>
-            `);
-        }
+            `
+        );
+      }
 
-        function addParticipant(event) {
-            const participantContainer = document.getElementById('participantContainer' + event);
-            participantContainer.insertAdjacentHTML('beforeend', `
+      function addParticipant(event) {
+        const participantContainer = document.getElementById(
+          "participantContainer" + event
+        );
+        participantContainer.insertAdjacentHTML(
+          "beforeend",
+          `
                 <div class="form-group">
                     <label>Participant Name:</label>
                     <input type="text" name="participantName${event}[]" class="form-control" required>
@@ -261,8 +508,10 @@
                     <label>Participant Image:</label>
                     <input type="file" name="participantImage${event}[]" class="form-control-file" accept="image/*" required>
                 </div>
-            `);
-        }
+            `
+        );
+      }
     </script>
-</body>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </html>

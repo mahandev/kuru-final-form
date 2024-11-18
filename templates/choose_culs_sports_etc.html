@@ -1,113 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>FLAME Kurukshetra 2025 Registration Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'kurukshetra.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 <!-- Bootstrap Packaged JS (Bundle) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selection</title>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+  />
+    <link
+    href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
+    rel="stylesheet"
+  />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            padding: 0;
-            margin: 0;
-        }
-        body {
-            font-family: "Open Sans", sans-serif;
-            accent-color: orange;
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            background-color: #000000; /* Black background */
-            color: #ffffff; /* White text */
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-            gap: 3rem;
-            width: 100%;
-        }
-        .wrapper {
-            max-width: 75rem;
-            width: 100%;
-            padding: min(3rem, 5vw);
-        }
-        form {
-            padding: 1.5rem;
-            background-color: #000000; /* Black form background */
-            border-radius: 0.5rem;
-            border: 1px solid orange; /* Orange border */
-        }
         legend {
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: orange; /* Orange text */
-        }
-        h4 {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #ff9e00; /* Orange text */
-            margin-top: 1rem;
-            margin-bottom: 0.5rem;
-        }
-        fieldset > * + * {
-            margin-top: 0.5rem;
-        }
-        form > * + * {
-            margin-top: 1.5rem;
-        }
-        .form__group {
-            display: flex;
-            align-items: center;
-        }
-        input[type="checkbox"],
-        input[type="radio"] {
-            width: 1.5em;
-            height: 1.5em;
-            margin-right: 0.65rem;
-        }
-        input[type="submit"] {
-            background-color: orange;
-            color: #000000; /* Black text */
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #ff6f00; /* Darker orange on hover */
-        }
-        @media (max-width: 768px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        .form__group{
-            margin-bottom: 1vh;
+            font-family: "Montserrat", sans-serif;
         }
     </style>
 </head>
-<body>
-
+<body class="bg-black">
+    <div class="flex flex-col justify-center items-center h-max">
+        <div
+          class="border-x border-y p-8 rounded-lg drop-shadow-lg border-slate-400 flex flex-col max-w-[900px] justify-between items-center p-4 leading-normal bg-[#1E1E1E]"
+        >
 <div class="wrapper">
-    <h1 style="color: orange;">Select Events</h1>
-    <div class="grid">
+    <h1 style="font-family: Evers;" class="text-4xl md:text-5xl mb-4 font-extrabold text-white">
+        Select Events
+      </h1>
         <form action="{{ url_for('submit') }}" method="post">
+            <div class="flex flex-col justify-center items-center gap-16">
+            <div class="">
             {% if 'sports' in chosen_categories %}
             <fieldset>
-                <legend>Select Your Sports</legend>
+                <legend class="mb-4 mt-1 text-black font-bold text-center bg-[#FF5F1F] p-2">Sports Events</legend>
                 <div class="container">
                     <div class="row">
                         {% for sport in sport_names %}
-                        <div class="col-md-6">
-                            <h4>{{ sport }}</h4>
+                        <div class="col-md-6 mb-8 md:mb-16">
+                            <h4 class="text-lg mb-2 font-medium text-[#FF5F1F]">{{ sport }}</h4>
                             {% for category in sport_categories[sport] %}
-                            <div class="form__group" >
-                                <input  type="checkbox"  name="sports" value="{{ sport }}-{{ category }}">
-                                <label for="{{ category }}">{{ category }} ₹{{ sports_name_data[sport][category]["price"] }}</label>
+                            <div class="block flex form__group" >
+                                <input  type="checkbox"  name="sports" value="{{ sport }}-{{ category }}" class="cursor-pointer mt-1 w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                >
+                                <label for="{{ category }}" class="mb-2 ml-2 text-sm text-white"
+                                >{{ category }} ₹{{ sports_name_data[sport][category]["price"] }}</label>
                             </div>
                             {% endfor %}
                         </div>
@@ -115,19 +64,22 @@
                     </div>
                 </div>
             {% endif %}
-                <hr>
+        </div>
+        <div class="">
             {% if 'culturals' in chosen_categories %}
             <fieldset>
-                <legend>Select Your Culturals</legend>
+                <legend class="mb-4 mt-1 text-black font-bold text-center bg-[#FF5F1F] p-2">Cultural Events</legend>
                 <div class="container">
                     <div class="row">
                         {% for cultural in cultural_names %}
-                        <div class="col-md-6">
-                            <h4>{{ cultural }}</h4>
+                        <div class="col-md-6 mb-8 md:mb-16">
+                            <h4 class="text-lg mb-2 font-medium text-[#FF5F1F]">{{ cultural }}</h4>
                             {% for category in cultural_categories[cultural] %}
-                            <div class="form__group" >
-                                <input  type="checkbox" id="{{ cultural_name_data[cultural] }}" name="culturals" value="{{ cultural }}-{{ category }}">
-                                <label for="{{ category }}">{{ category }} ₹{{ cultural_name_data[cultural][category]["price"] }}</label>
+                            <div class="block flex form__group" >
+                                <input  type="checkbox" id="{{ cultural_name_data[cultural] }}" name="culturals" value="{{ cultural }}-{{ category }}" class="cursor-pointer w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                >
+                                <label for="{{ category }}" class="mb-2 ml-2 text-sm text-white"
+                                >{{ category }} ₹{{ cultural_name_data[cultural][category]["price"] }}</label>
                             </div>
                             {% endfor %}
                         </div>
@@ -136,41 +88,22 @@
                 </div>
             </fieldset>
             {% endif %}
-
+        </div>
+        <div class="">
             {% if 'management' in chosen_categories %}
-            <!-- <fieldset>
-                <legend>Select Your Management Event</legend>
-                <h4>Management Events</h4>
-                
-                <div class="form__group">
-                    <input type="checkbox" id="marcurious" name="management" value="marcurious">
-                    <label for="marcurious">Marcurious (₹590)</label>
-                </div>
-                <div class="form__group">
-                    <input type="checkbox" id="digi_quest" name="management" value="digi-quest">
-                    <label for="digi_quest">Digi Quest (₹590)</label>
-                </div>
-                <div class="form__group">
-                    <input type="checkbox" id="bull_bear_brawl" name="management" value="bull-bear-brawl">
-                    <label for="bull_bear_brawl">Bull & Bear Brawl (₹590)</label>
-                </div>
-                <div class="form__group">
-                    <input type="checkbox" id="mystery_maze" name="management" value="mystery-maze">
-                    <label for="mystery_maze">Mystery Maze (₹826)</label>
-                </div>
-            </fieldset> -->
-
             <fieldset>
-                <legend>Select Your Management Events</legend>
+                <legend class="mb-4 mt-1 text-black font-bold text-center bg-[#FF5F1F] p-2">Management Events</legend>
                 <div class="container">
                     <div class="row">
                         {% for management in management_names %}
-                        <div class="col-md-6">
-                            <h4>{{ management }}</h4>
+                        <div class="col-md-6 mb-8 md:mb-16">
+                            <h4 class="text-lg mb-2 font-medium text-[#FF5F1F]">{{ management }}</h4>
                             {% for category in management_categories[management] %}
-                            <div class="form__group" >
-                                <input  type="checkbox" id="{{ management_name_data[management] }}" name="management" value="{{ management }}-{{ category }}">
-                                <label for="{{ category }}">{{ category }} ₹{{ management_name_data[management][category]["price"] }}</label>
+                            <div class="flex form__group md:w-[330px]" >
+                                <input  type="checkbox" id="{{ management_name_data[management] }}" name="management" value="{{ management }}-{{ category }}" class="cursor-pointer w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                >
+                                <label for="{{ category }}" class="mb-2 ml-2 text-sm text-white"
+                                >{{ category }} ₹{{ management_name_data[management][category]["price"] }}</label>
                             </div>
                             {% endfor %}
                         </div>
@@ -179,11 +112,18 @@
                 </div>
             </fieldset>
             {% endif %}
+        </div>
+        </div>
+    </div>
             
-            <input type="submit" value="Submit">
+        <input
+        type="submit"
+        value="Next"
+        class="cursor-pointer text-white text-center focus:bg-[#ff51f] focus:ring-1 focus:outline-none focus:ring-[#FF7F50] rounded-lg text-xl font-medium px-5 py-4 text-center bg-[#FF5F1F] hover:bg-[#EC5800] w-[300px] max-w-[350px] me-2 mb-2"
+      />
         </form>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 </html>

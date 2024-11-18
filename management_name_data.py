@@ -42,8 +42,8 @@ management_name_data = {
     },
     
     "MUN": {
-    "MUN": {
-       "price": 0,
+    "MUN Solo": {
+       "price": 2_500,
         "event_type": "single",
         "min_participants": 1,
         "max_participants": 1,
@@ -52,5 +52,17 @@ management_name_data = {
         "date_of_event": "24/01/2025 to 25/01/2025",
         "age_category": "15+",
         "docs_required": "ID Proof",        
-    },}
+    },
+     "MUN Team": {
+       "price":40_000,
+        "event_type": "single",
+        "min_participants": 10,
+        "max_participants": 25,
+        "min_managers": 1,
+        "max_managers": 2,
+        "date_of_event": "24/01/2025 to 25/01/2025",
+        "age_category": "15+",
+        "docs_required": "ID Proof",        
+    },
+    }
 }

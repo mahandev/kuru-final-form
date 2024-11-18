@@ -219,7 +219,7 @@ sports_name_data = {
     "5k Hill Run":{
         "5k Hill Run [Open]": {
             "gender": "open",
-            "price": 500,
+            "price": 501,
             "event_type": "single",
             "min_participants": 1,
             "max_participants": 1,

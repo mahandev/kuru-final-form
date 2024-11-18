@@ -92,9 +92,7 @@ def choose_events():
     management_names = list(management_name_data.keys())
     management_categories = {}
     for management in management_names:
-        management_categories[management]= ([x for x in list(management_name_data[management])])
-    
-        
+        management_categories[management]= ([x for x in list(management_name_data[management])])     
     # print(sports_name_data[sport]["price"])
     chosen_areas = session['user']['categories']
     return render_template('choose_culs_sports_etc.html', 
@@ -107,7 +105,8 @@ def choose_events():
                            cultural_names=cultural_names,
                            management_name_data=management_name_data,
                            management_names=management_names,
-                           management_categories=management_categories
+                           management_categories=management_categories,
+
                            )
 
 @app.route('/submit', methods=["GET", "POST"])
@@ -141,13 +140,29 @@ def submit():
             key = category
             costs[key] = cultural_name_data[cultural][category]["price"]
         
-        
+        mun_team_present = False
         
         for i in chosen_management:
+            # Split the input into management and category
             management, category = i.split('-', 1)
-            management_cost += management_name_data[management][category]["price"]
+
+            try:
+                # Add the fixed price to the management cost
+                management_cost += management_name_data[management][category]["price"]
+            except KeyError:
+                # If "price" doesn't exist, add the per-person price
+                mun_team_present = True
+                management_cost += management_name_data[management][category]["price_per_person"]
+
+            # Determine the cost for the specific category
             key = category
-            costs[key] = management_name_data[management][category]["price"]
+            try:
+                # Add the fixed price to the costs dictionary
+                costs[key] = management_name_data[management][category]["price"]
+            except KeyError:
+                # If "price" doesn't exist, add the per-person price
+                mun_team_present = True
+                costs[key] = management_name_data[management][category]["price_per_person"]
 
         c_culturals = []
         c_sports = []
@@ -280,6 +295,22 @@ def management_particpant_submit():
     users_collection.insert_one(user).inserted_id
     session['user'] = json.loads(json_util.dumps(user))
     return session['user']
+
+
+
+@app.route('/update_total_cost', methods=['POST'])
+def update_total_cost():
+    data = request.get_json()  # Get JSON data from the client
+    num_mun_participants = data.get('numMUNParticipants', 0)
+    cost_per_mun_participant = 2000
+
+    # Calculate the new total cost
+    user = session['user']
+    user["total_cost"] = 20000 + (num_mun_participants - 10) * cost_per_mun_participant
+    session['user'] = user
+    print(user)
+
+    return redirect(url_for('main'))
 
 
 
