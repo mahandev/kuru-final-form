@@ -9,27 +9,20 @@
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'kurukshetra.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-<!-- Bootstrap Packaged JS (Bundle) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-  />
+    />
     <link
     href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
     rel="stylesheet"
-  />
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <style>
-        legend {
-            font-family: "Montserrat", sans-serif;
-        }
-    </style>
 </head>
 <body class="bg-black">
     <div class="flex flex-col justify-center items-center h-max">
@@ -39,36 +32,36 @@
         <div
           class="border-x border-y p-8 rounded-lg drop-shadow-lg border-slate-400 flex flex-col max-w-[900px] justify-between items-center p-4 leading-normal bg-[#1E1E1E]"
         >
-<div class="wrapper">
-    <h1 style="font-family: Evers;" class="text-4xl md:text-5xl mb-4 font-extrabold text-white">
-        Select Events
-      </h1>
-        <form action="{{ url_for('submit') }}" method="post">
-            <div class="flex flex-col justify-center items-center gap-16">
-            <div class="">
-            {% if 'sports' in chosen_categories %}
-            <fieldset>
-                <legend class="mb-4 mt-1 text-black font-bold text-center bg-[#FF5F1F] p-2">Sports Events</legend>
-                <div class="container">
-                    <div class="row">
-                        {% for sport in sport_names %}
-                        <div class="col-md-6 mb-8 md:mb-16">
-                            <h4 class="text-lg mb-2 font-medium text-[#FF5F1F]">{{ sport }}</h4>
-                            {% for category in sport_categories[sport] %}
-                            <div class="block flex form__group" >
-                                <input  type="checkbox"  name="sports" value="{{ sport }}-{{ category }}" class="cursor-pointer mt-1 w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                >
-                                <label for="{{ category }}" class="mb-2 ml-2 text-sm text-white"
-                                >{{ category }} ₹{{ sports_name_data[sport][category]["price"] }}</label>
+        <div class="wrapper">
+            <h1 style="font-family: Evers;" class="text-4xl md:text-5xl mb-4 font-extrabold text-white">
+                Select Events
+            </h1>
+            <form action="{{ url_for('submit') }}" method="post">
+                <div class="flex flex-col justify-center items-center gap-16">
+                    <div class="">
+                        {% if 'sports' in chosen_categories %}
+                        <fieldset>
+                        <legend class="mb-4 mt-1 text-black font-bold text-center bg-[#FF5F1F] p-2">Sports Events</legend>
+                            <div class="container">
+                                <div class="row">
+                                    {% for sport in sport_names %}
+                                    <div class="col-md-6 mb-8 md:mb-16">
+                                        <h4 class="text-lg mb-2 font-medium text-[#FF5F1F]">{{ sport }}</h4>
+                                        {% for category in sport_categories[sport] %}
+                                        <div class="block flex form__group" >
+                                            <input  type="checkbox"  name="sports" value="{{ sport }}-{{ category }}" class="cursor-pointer mt-1 w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            >
+                                            <label for="{{ category }}" class="mb-2 ml-2 text-sm text-white"
+                                            >{{ category }} ₹{{ sports_name_data[sport][category]["price"] }}</label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
                             </div>
-                            {% endfor %}
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-        <div class="">
+                        {% endif %}
+                    <!-- </div> -->
+                <div class="">
             {% if 'culturals' in chosen_categories %}
             <fieldset>
                 <legend class="mb-4 mt-1 text-black font-bold text-center bg-[#FF5F1F] p-2">Cultural Events</legend>
@@ -103,7 +96,7 @@
                             <h4 class="text-lg mb-2 font-medium text-[#FF5F1F]">{{ management }}</h4>
                             {% for category in management_categories[management] %}
                             <div class="flex form__group md:w-[330px]" >
-                                <input  type="checkbox" id="{{ management_name_data[management] }}" name="management" value="{{ management }}-{{ category }}" class="cursor-pointer w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                <input  type="checkbox" id="{{management}}" name="management" value="{{ management }}-{{ category }}" class="cursor-pointer w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                 >
                                 <label for="{{ category }}" class="mb-2 ml-2 text-sm text-white"
                                 >{{ category }} ₹{{ management_name_data[management][category]["price"] }}</label>
@@ -128,5 +121,19 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+<script>
+        const mun_nodes = document.querySelectorAll("#MUN")
+        const mun_modal = document.querySelector(".mun-modal")
+
+        mun_nodes.forEach(node => {
+            node.addEventListener("change", () => {
+                mun_nodes.forEach(cb => {
+                    if (cb !== node) {
+                        cb.checked = false
+                    }
+                })
+            })
+        })
+</script>
 </body>
 </html>
