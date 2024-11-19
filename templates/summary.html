@@ -71,7 +71,6 @@
               <tr>
                 <td colspan="2">
                   <!-- Min participants -->
-                  
                   {% for i in range(0, number_of_particpants[sport]["min"]) %}
                   <div class="flex flex-col form-group mb-8">
                     <!-- <label class="block mb-2 text-sm font-medium text-white">Participant Name:</label> -->
@@ -474,6 +473,16 @@
           </table>
           {% endif %}
 
+          <!-- Download Invoice -->
+
+          <div class="flex items-center mb-4">
+            <input id="link-checkbox" type="checkbox" value="" class="cursor-pointer check-option w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            >
+            <label for="link-checkbox" class="cursor-pointer ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Get GST invoice straight into your inbox mail.</label>
+          </div>
+
+          <!--  -->
+
           <h2 class="text-lg mb-2 font-medium text-[#FF5F1F]">
             Total Cost: ₹{{ total_cost }}
           </h2>
@@ -528,7 +537,7 @@
             `
         );
       }
-    </script>
+      </script>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </html>
