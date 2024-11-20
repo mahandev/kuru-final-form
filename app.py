@@ -334,31 +334,47 @@ def management_particpant_submit():
                 managers.append(manager)
 
         # Collect participants for this event
+        # Fetch participants' form data
         participant_names = request.form.getlist(f"participantName{event}[]")
         participant_phones = request.form.getlist(f"participantPhone{event}[]")
         participant_images = request.files.getlist(f"participantImage{event}[]")
-        # participant_country_preference = request.form.getlist(f'participantCountryPreference{event}[]')
-        # participant_committee_preference = request.form.getlist(f'participantCommitteePreference{event}[]')
 
-        for name, phone, image in zip(
-            participant_names, participant_phones, participant_images
-        ):
+        # Only fetch country and committee preferences if they're relevant for the event
+        participant_country_preference = request.form.getlist(f'participantCountryPreference{event}[]') if f'participantCountryPreference{event}[]' in request.form else []
+        participant_committee_preference = request.form.getlist(f'participantCommitteePreference{event}[]') if f'participantCommitteePreference{event}[]' in request.form else []
+
+        print(participant_country_preference)
+        print(participant_committee_preference)
+
+        # Iterate through participants
+        for idx, (name, phone, image) in enumerate(zip(participant_names, participant_phones, participant_images)):
             if name and phone:
+                # Fetch optional fields based on their presence
+                country = participant_country_preference[idx] if idx < len(participant_country_preference) else None
+                committee = participant_committee_preference[idx] if idx < len(participant_committee_preference) else None
+                
+                # Save the image to the database
                 image_id = fs.put(
                     image, filename=f"{name}_image", content_type=image.content_type
                 )
+                
+                # Construct participant object
                 participant = {
                     "name": name,
                     "phone": phone,
                     "event": event,
                     "role": "participant",
                     "status": "Outside Campus",
-                    "image_id": image_id,  # Store the GridFS file ID as a reference
+                    "image_id": image_id,
+                    "country": country,  # Will be None if not relevant
+                    "committee": committee,  # Will be None if not relevant
                 }
-                # print(participant_country_preference)
-                # print(participant_committee_preference)
+                print(participant)
+                
+                # Insert into database
                 participants_collection.insert_one(participant)
                 participants.append(participant)
+
 
         # Save event details for user
         user["event_details"][event] = {

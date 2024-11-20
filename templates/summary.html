@@ -37,6 +37,45 @@
         <div class="flex justify-between items-center p-6 header-img-logo">
             <img class="w-[320px] md:w-[475px]" src="{{ url_for('static', filename = 'logo.png') }}" alt="Kurukshetra 2025">
         </div>
+
+
+        <nav class="flex py-4" aria-label="Breadcrumb">
+          <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+            <li class="inline-flex items-center">
+              <a href="{{url_for('main')}}" class="inline-flex items-center text-xs md:text-lg font-medium hover:text-blue-600 text-gray-400 hover:text-white">
+                <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
+                </svg>
+                User Details
+              </a>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                </svg>
+                <a href="{{url_for('choose_areas')}}" class="ms-1 text-xs md:text-lg font-medium hover:text-blue-600 md:ms-2 text-gray-400 hover:text-white">Choose Areas</a>
+              </div>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                </svg>
+                <a href="{{url_for('choose_events')}}" class="ms-1 text-xs md:text-lg font-medium hover:text-blue-600 md:ms-2 text-gray-400 hover:text-white">Choose Events</a>
+              </div>
+            </li>
+            <li aria-current="page">
+              <div class="flex items-center">
+                <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                </svg>
+                <span class="ms-1 text-xs md:text-lg font-medium md:ms-2 text-gray-400">Summary</span>
+              </div>
+            </li>
+          </ol>
+        </nav>
+
       <div
         class="border-x border-y p-8 rounded-lg drop-shadow-lg border-slate-400 flex flex-col max-w-[900px] justify-between items-center p-4 leading-normal bg-[#1E1E1E]"
       >
@@ -81,14 +120,14 @@
                     <div id="accordion-flush-body-p-{{sports_ids[sport]}}" class="hidden" aria-labelledby="accordion-flush-heading-p-{{sports_ids[sport]}}">
                       <div class="py-5 border-b border-gray-200 dark:border-gray-700">
                         {% for i in range(0, number_of_particpants[sport]["min"]) %}
+                        <label class="block mb-2 text-sm font-medium text-white">Participant {{i+1}}</label>
                           <div class="flex flex-col form-group mb-8">
-                            <!-- <label class="block mb-2 text-sm font-medium text-white">Participant Name:</label> -->
                             <input
                               type="text"
                               name="participantName{{sport}}[]"
                               class="form-control rounded-none my-2 rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               required
-                              placeholder="Participant Name:"
+                              placeholder="Participant {{i+1}} Name:"
                             />
                             <!-- <label class="block mb-2 text-sm font-medium text-white">Participant Phone:</label> -->
                             <input
@@ -96,7 +135,7 @@
                               name="participantPhone{{sport}}[]"
                               class="form-control rounded-none my-2 rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               required
-                              placeholder="Participant Phone:"
+                              placeholder="Participant {{i+1}} Phone:"
                             />
                             <!-- <label class="block mb-2 text-sm font-medium text-white">Participant Image:</label> -->
                             <input
@@ -104,9 +143,13 @@
                               name="participantImage{{sport}}[]"
                               class="form-control-file rounded-none my-2 rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               accept="image/*"
+                              data-alert-id="{{i}}-p-{{sports_ids[sport]}}"
                               required
                               placeholder="Participant Image:"
                             />
+                            <div id="{{i}}-p-{{sports_ids[sport]}}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                              <span class="font-medium">Alert!</span>
+                            </div>
                           </div>
                         {%endfor%}
                       </div>
@@ -127,28 +170,32 @@
                     <div id="accordion-flush-body-op-{{sports_ids[sport]}}" class="hidden" aria-labelledby="accordion-flush-heading-op-{{sports_ids[sport]}}">
                       <div class="py-5 border-b border-gray-200 dark:border-gray-700">
                         {% for i in range(0, (number_of_particpants[sport]["max"] - number_of_particpants[sport]["min"])) %}
+                        <label class="block mb-2 text-sm font-medium text-white">Optional Participant {{i+1}}</label>
                           <div class="flex flex-col mb-8 form-group">
-                            <!-- <label>Optional field:</label> -->
                             <input
                               type="text"
                               name="participantName{{sport}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Participant Name:"
+                              placeholder="Optional Participant {{i+1}} Name:"
                             />
                             <!-- <label>Participant Phone:</label> -->
                             <input
                               type="text"
                               name="participantPhone{{sport}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Participant Phone:"
+                              placeholder="Optional Participant {{i+1}} Phone:"
                             />
                             <!-- <label>Participant Image:</label> -->
                             <input
                               type="file"
                               name="participantImage{{sport}}[]"
+                              data-alert-id="{{i}}-op-{{sports_ids[sport]}}"
                               class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               accept="image/*"
                             />
+                            <div id="{{i}}-op-{{sports_ids[sport]}}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                              <span class="font-medium">Alert!</span>
+                            </div>
                           </div>
                         {% endfor %} 
                       </div>
@@ -172,13 +219,13 @@
                     <div id="accordion-flush-body-m-{{sports_ids[sport]}}" class="hidden" aria-labelledby="accordion-flush-heading-m-{{sports_ids[sport]}}">
                       <div class="py-5 border-b border-gray-200 dark:border-gray-700">
                         {% for i in range(0, number_of_managers[sport]["min"]) %}
+                        <label class="block mb-2 text-sm font-medium text-white">Manager {{i+1}}</label>
                           <div class="flex flex-col mb-8 form-group">
-                            <!-- <label>:</label> -->
                             <input
                               type="text"
                               name="managerName{{sport}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Manager Name"
+                              placeholder="Manager {{i+1}} Name"
                               required
                             />
                             <!-- <label>Manager Phone:</label> -->
@@ -186,7 +233,7 @@
                               type="text"
                               name="managerPhone{{sport}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Manager Phone"
+                              placeholder="Manager {{i+1}} Phone"
                               required
                             />
                             <!-- <label>Manager Image:</label> -->
@@ -194,9 +241,13 @@
                               type="file"
                               name="managerImage{{sport}}[]"
                               class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                              data-alert-id="{{i}}-m-{{sports_ids[sport]}}"
                               accept="image/*"
                               required
                             />
+                            <div id="{{i}}-m-{{sports_ids[sport]}}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                              <span class="font-medium">Alert!</span>
+                            </div>
                           </div>
                         {%endfor%} 
                       </div>
@@ -219,28 +270,32 @@
                       <div class="py-5 border-b border-gray-200 dark:border-gray-700">
                         {% for i in range(0, (number_of_managers[sport]["max"] - number_of_managers[sport]["min"])) %}                    
                           <div class="flex flex-col mb-8 form-group">
-                            <!-- <label>Optional field:</label> -->
+                            <label class="block mb-2 text-sm font-medium text-white">Optional Manager {{i+1}}</label>
                             <input
                               type="text"
                               name="managerName{{sport}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Manager Name:"
+                              placeholder="Optional Manager {{i+1}} Name:"
                             />
                             <!-- <label>Manager Phone:</label> -->
                             <input
                               type="text"
                               name="managerPhone{{sport}}[]"
-                              class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Manager Phone:"
+                              class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                              placeholder="Optional Manager {{i+1}} Phone:"
                             />
                             <!-- <label>Manager Image:</label> -->
                             <input
                               type="file"
                               name="managerImage{{sport}}[]"
                               class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                              data-alert-id="{{i}}-om-{{sports_ids[sport]}}"
                               accept="image/*"
                               placeholder="Manager Image:"
                             />
+                            <div id="{{i}}-om-{{sports_ids[sport]}}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                              <span class="font-medium">Alert!</span>
+                            </div>
                           </div>
                         {% endfor %}
                       </div>
@@ -290,33 +345,35 @@
                         <div id="accordion-flush-body-p-{{cultural_ids[cultural]}}" class="hidden" aria-labelledby="accordion-flush-heading-p-{{cultural_ids[cultural]}}">
                           <div class="py-5 border-b border-gray-200 dark:border-gray-700">
                             {% for i in range(0, number_of_particpants[cultural]["min"]) %}
+                            <label class="block mb-2 text-sm font-medium text-white">Participant {{i+1}}</label>
                             <div class="flex flex-col form-group mb-8">
-                              <!-- <label>Participant Name:</label> -->
                               <input
                                 type="text"
                                 name="participantName{{cultural}}[]"
                                 class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Participant Name:"
+                                placeholder="Participant {{i+1}} Name:"
                                 required
                               />
                               <!-- <label>Participant Phone:</label> -->
                               <input
                                 type="text"
                                 name="participantPhone{{cultural}}[]"
-                                class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Participant Phone:"
+                                class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Participant {{i+1}} Phone:"
                                 required
                               />
-                              <label>Participant Image:</label>
                               <input
                                 type="file"
                                 name="participantImage{{cultural}}[]"
                                 class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                                data-alert-id="{{i}}-p-{{cultural_ids[cultural]}}"
                                 accept="image/*"
                                 placeholder="Participant Image:"
                                 required
                               />
-                              
+                              <div id="{{i}}-p-{{cultural_ids[cultural]}}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                                <span class="font-medium">Alert!</span>
+                              </div>
                             </div>
                             {%endfor%}
                           </div>
@@ -345,28 +402,33 @@
                             {% for i in range(0,
                               (number_of_particpants[cultural]["max"] -
                               number_of_particpants[cultural]["min"])) %}
+                            <label class="block mb-2 text-sm font-medium text-white">Optional Participant {{i+1}}</label>
                             <div class="flex flex-col form-group mb-8">
                               <input
                                 type="text"
                                 name="participantName{{cultural}}[]"
                                 class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Participant Name:"
+                                placeholder="Optional Participant {{i+1}} Name:"
                               />
                               <!-- <label>Participant Phone:</label> -->
                               <input
                                 type="text"
                                 name="participantPhone{{cultural}}[]"
                                 class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Participant Phone:"
+                                placeholder="Optional Participant {{i+1}} Phone:"
                               />
                               <!-- <label>Participant Image:</label> -->
                               <input
                                 type="file"
                                 name="participantImage{{cultural}}[]"
                                 class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                                data-alert-id="{{i}}-op-{{cultural_ids[cultural]}}"
                                 accept="image/*"
                                 placeholder="Participant Image:"
                               />
+                              <div id="{{i}}-op-{{cultural_ids[cultural]}}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                                <span class="font-medium">Alert!</span>
+                              </div>
                             </div>
                             {% endfor %} 
                           </div>
@@ -392,13 +454,14 @@
                           <div class="py-5 border-b border-gray-200 dark:border-gray-700">
                             {% for i in range(0,
                               number_of_managers[cultural]["min"]) %}
+                            <label class="block mb-2 text-sm font-medium text-white">Manager {{i+1}}</label>
                             <div class="flex flex-col form-group mb-8">
                               <!-- <label>Manager Name:</label> -->
                               <input
                                 type="text"
                                 name="managerName{{cultural}}[]"
                                 class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Manager Name:"
+                                placeholder="Manager {{i+1}} Name:"
                                 required
                               />
                               <!-- <label>Manager Phone:</label> -->
@@ -406,7 +469,7 @@
                                 type="text"
                                 name="managerPhone{{cultural}}[]"
                                 class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Manager Phone:"
+                                placeholder="Manager {{i+1}} Phone:"
                                 required
                               />
                               <!-- <label>Manager Image:</label> -->
@@ -414,10 +477,14 @@
                                 type="file"
                                 name="managerImage{{cultural}}[]"
                                 class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                                data-alert-id="{{i}}-m-{{cultural_ids[cultural]}}"
                                 accept="image/*"
                                 placeholder="Manager Image:"
                                 required
                               />
+                              <div id="{{i}}-m-{{cultural_ids[cultural]}}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                                <span class="font-medium">Alert!</span>
+                              </div>
                             </div>
                             {%endfor%}
                           </div>
@@ -443,28 +510,33 @@
                             {% for i in range(0,
                               (number_of_managers[cultural]["max"] -
                               number_of_managers[cultural]["min"])) %}
+                            <label class="block mb-2 text-sm font-medium text-white">Optional Manager {{i+1}}</label>
                             <div class="flex flex-col form-group mb-8">
                               <input
                                 type="text"
                                 name="managerName{{cultural}}[]"
-                                class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Manager Name:"
+                                class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Optional Manager {{i+1}} Name:"
                               />
                               <!-- <label>Manager Phone:</label> -->
                               <input
                                 type="text"
                                 name="managerPhone{{cultural}}[]"
-                                class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Manager Phone:"
+                                class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Optional Manager {{i+1}} Phone:"
                               />
                               <!-- <label>Manager Image:</label> -->
                               <input
                                 type="file"
                                 name="managerImage{{cultural}}[]"
                                 class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                                data-alert-id="{{i}}-om-{{cultural_ids[cultural]}}"
                                 placeholder="Manager Image:"
                                 accept="image/*"
                               />
+                              <div id="{{i}}-om-{{cultural_ids[cultural]}}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                                <span class="font-medium">Alert!</span>
+                              </div>
                             </div>
                             {% endfor %}
                           </div>
@@ -504,7 +576,8 @@
                    
                     <div id="accordion-flush-{{management_ids[management]}}" data-accordion="collapse" class="mt-4 mb-8" data-active-classes="bg-[#1E1E1E] text-gray-500" data-inactive-classes="text-gray-500 dark:text-gray-400">
                       
-                      <h2 id="accordion-flush-heading-p-{{management_ids[management]}}{{management_ids[management]}}="button" class="flex items-center justify-between p-4 bg-[]#1E1E1E w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3" data-accordion-target="#accordion-flush-body-p-{{management_ids[management]}}" aria-expanded="true" aria-controls="accordion-flush-body-p-{{management_ids[management]}}">
+                      <h2 id="accordion-flush-heading-p-{{management_ids[management]}}{{management_ids[management]}}">
+                        <button type="button" class="flex items-center justify-between p-4 bg-[]#1E1E1E w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3" data-accordion-target="#accordion-flush-body-p-{{management_ids[management]}}" aria-expanded="true" aria-controls="accordion-flush-body-p-{{management_ids[management]}}">
                           <span class="text-gray-500">Required Participants</span>
                           <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
@@ -514,43 +587,45 @@
                       <div id="accordion-flush-body-p-{{management_ids[management]}}" class="hidden" aria-labelledby="accordion-flush-heading-p-{{management_ids[management]}}">
                         <div class="py-5 border-b border-gray-200 dark:border-gray-700">
                           {% for i in range(0, number_of_particpants[management]["min"]) %}
+                          <label class="block mb-2 text-sm font-medium text-white">Participant {{i+1}}</label>
                           <div class="flex flex-col form-group mb-8">
-                            <label>Participant Name</label>
                             <input
                               type="text"
                               name="participantName{{management}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Participant Name:"
+                              placeholder="Participant {{i+1}} Name:"
                               required
                             />
-                            <label>Participant Phone Number</label>
                             <input
                               type="text"
                               name="participantPhone{{management}}[]"
-                              class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Participant Phone:"
+                              class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                              placeholder="Participant {{i+1}} Phone:"
                               required
                             />
-                            <label>Participant Image</label>
                             <input
                               type="file"
                               name="participantImage{{management}}[]"
                               class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               accept="image/*"
+                              data-alert-id="{{i}}-p-{management_ids[management]}"
                               placeholder="Participant Image:"
                               required
                             />
+                            <div id="{{i}}-p-{management_ids[management]}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                              <span class="font-medium">Alert!</span>
+                            </div>
                             {% if management == "MUN Team" or management == "MUN Solo"%}
-                            <label>Participant Country Preference</label>
+                            <label>Participant {{i+1}} Country Preference</label>
                             <input
                               type="text"
                               name="participantCountryPreference{{management}}[]"
-                              class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Participant Country Preference, Add 3 Values, Commma Seperated:"
+                              class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                              placeholder="Participant {{i+1}} Country Preference, Add 3 Values, Commma Seperated:"
                               required
                             />
 
-                            <label>Participant Committee Preference</label>
+                            <label>Participant {{i+1}} Committee Preference</label>
                             <select id="committee" name="participantCommitteePreference{{management}}[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                               <option value="United Nations Security Council (UNSC)">United Nations Security Council (UNSC)</option>                              </option>
                               <option value="United Nations Human Rights Council (UNHRC)">United Nations Human Rights Council (UNHRC)</option>
@@ -575,7 +650,7 @@
                       
                       <!-- Optional Participants -->
                       
-                      <h2 id="accordion-flush-heading-op-{{management_ids[management]}}">
+                      <h2 id="accordion-flush-heading-op-{{management_ids[management]}}" class="cursor-pointer">
                         <button type="button" class="flex items-center bg-[#1E1E1E] p-4 justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3" data-accordion-target="#accordion-flush-body-op-{{management_ids[management]}}" aria-expanded="true" aria-controls="accordion-flush-body-op-{{management_ids[management]}}">
                           <span class="text-gray-500">Optional Participants</span>
                           <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -587,28 +662,33 @@
                           {% for i in range(0,
                             (number_of_particpants[management]["max"] -
                             number_of_particpants[management]["min"])) %}
+                          <label class="block mb-2 text-sm font-medium text-white">Optional Participant {{i+1}}</label>
                           <div class="flex flex-col form-group mb-8">
                             <input
                               type="text"
                               name="participantName{{management}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Participant Name:"
+                              placeholder="Optional Participant {{i+1}} Name:"
                             />
                             <!-- <label>Participant Phone:</label> -->
                             <input
                               type="text"
                               name="participantPhone{{management}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Participant Phone:"
+                              placeholder="Optional Participant {{i+1}} Phone:"
                             />
                             <!-- <label>Participant Image:</label> -->
                             <input
                               type="file"
                               name="participantImage{{management}}[]"
                               class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                              data-alert-id="{{i}}-op-{{management_ids[management]}}"
                               accept="image/*"
                               placeholder="Participant Image:"
                             />
+                            <div id="{{i}}-op-{management_ids[management]}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                              <span class="font-medium">Alert!</span>
+                            </div>
                           </div>
                           {% endfor %} 
                         </div>
@@ -621,7 +701,7 @@
                       
                       <!-- Managers -->
                       
-                      <h2 id="accordion-flush-heading-m-{{management_ids[management]}}">
+                      <h2 id="accordion-flush-heading-m-{{management_ids[management]}}" class="cursor-pointer">
                         <button type="button" class="flex bg-[#1E1E1E] items-center p-4 justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3" data-accordion-target="#accordion-flush-body-m-{{management_ids[management]}}" aria-expanded="true" aria-controls="accordion-flush-body-m-{{management_ids[management]}}">
                           <span class="text-gray-500">Required Managers</span>
                           <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -634,13 +714,15 @@
                         <div class="py-5 border-b border-gray-200 dark:border-gray-700">
                           {% for i in range(0,
                             number_of_managers[management]["min"]) %}
+                          <label class="block mb-2 text-sm font-medium text-white">Manager {{i+1}}</label>
+
                           <div class="flex flex-col form-group mb-8">
                             <!-- <label>Manager Name:</label> -->
                             <input
                               type="text"
                               name="managerName{{management}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Manager Name:"
+                              placeholder="Manager {{i+1}} Name:"
                               required
                             />
                             <!-- <label>Manager Phone:</label> -->
@@ -648,7 +730,7 @@
                               type="text"
                               name="managerPhone{{management}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Manager Phone:"
+                              placeholder="Manager {{i+1}} Phone:"
                               required
                             />
                             <!-- <label>Manager Image:</label> -->
@@ -657,20 +739,24 @@
                               name="managerImage{{management}}[]"
                               class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               accept="image/*"
+                              data-alert-id="{{i}}-m-{{management_ids[management]}}"
                               placeholder="Manager Image:"
                               required
                             />
+                            <div id="{{i}}-m-{{management_ids[management]}}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                              <span class="font-medium">Alert!</span>
+                            </div>
                             {% if management == "MUN Team" or management == "MUN Solo"%}
-                            <label>Participant Country Preference</label>
+                            <label>Participant {{i+1}} Country Preference</label>
                             <input
                               type="text"
                               name="participantCountryPreference{{management}}[]"
-                              class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Participant Country Preference, Add 3 Values, Commma Seperated:"
+                              class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                              placeholder="Participant {{i}} Country Preference, Add 3 Values, Commma Seperated:"
                               required
                             />
 
-                            <label>Participant Committee Preference</label>
+                            <label>Participant {{i+1}} Committee Preference</label>
                             <select id="committee" name="participantCommitteePreference{{management}}[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                               <option value="United Nations Security Council (UNSC)">United Nations Security Council (UNSC)</option>                              </option>
                               <option value="United Nations Human Rights Council (UNHRC)">United Nations Human Rights Council (UNHRC)</option>
@@ -703,19 +789,20 @@
                       <div id="accordion-flush-body-om-{{management_ids[management]}}" class="hidden" aria-labelledby="accordion-flush-heading-om-{{management_ids[management]}}">
                         <div class="py-5 border-b border-gray-200 dark:border-gray-700">
                           {% for i in range(0, (number_of_managers[management]["max"] - number_of_managers[management]["min"])) %}
+                          <label class="block mb-2 text-sm font-medium text-white">Optional Manager {{i+1}}</label>
                           <div class="flex flex-col form-group mb-8">
                             <input
                               type="text"
                               name="managerName{{management}}[]"
-                              class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Manager Name:"
+                              class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                              placeholder="Optional Manager {{i+1}} Name:"
                             />
                             <!-- <label>Manager Phone:</label> -->
                             <input
                               type="text"
                               name="managerPhone{{management}}[]"
-                              class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Manager Phone:"
+                              class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                              placeholder="Optional Manager {{i+1}} Phone:"
                             />
                             <!-- <label>Manager Image:</label> -->
                             <input
@@ -723,8 +810,12 @@
                               name="managerImage{{management}}[]"
                               class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Manager Image:"
+                              data-alert-id="{{i}}-om-{{management_ids[management]}}"
                               accept="image/*"
                             />
+                            <div id="{{i}}-om-{{management_ids[management]}}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                              <span class="font-medium">Alert!</span>
+                            </div>
                           </div>
                           {% endfor %}
                         </div>
@@ -739,7 +830,7 @@
           <!-- Download Invoice -->
 
           <div class="flex items-center mb-4 mt-10">
-            <input id="link-checkbox" type="checkbox" value="" class="cursor-pointer check-option w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            <input id="link-checkbox" type="checkbox" value="need_gst" class="cursor-pointer check-option w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             >
             <label for="link-checkbox" class="cursor-pointer ms-2 text-sm font-medium text-gray-300">Get GST invoice straight into your inbox mail.</label>
           </div>
@@ -753,6 +844,7 @@
             Please Pay the Total Amount to 
           </h2><br>
           {%if use_qr%}
+          
           {% else %}
           {%endif%}
           <button
@@ -771,4 +863,33 @@
 
   </body>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+<script>
+  document.querySelectorAll('.form-control-file').forEach(input => {
+  input.addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
+    const allowedExtensions = ['image/jpeg', 'image/jpg', 'image/png'];
+    const alertId = event.target.getAttribute('data-alert-id');
+    const alertDiv = document.getElementById(alertId);
+
+    if (file) {
+      if (!allowedExtensions.includes(file.type)) {
+        alertDiv.textContent = 'Invalid file format. Allowed formats: JPEG, JPG, PNG.';
+        alertDiv.classList.remove('hidden');
+        event.target.value = '';
+        setTimeout(() => alertDiv.classList.add('hidden'), 3000);
+        return;
+      }
+
+      if (file.size > maxSizeInBytes) {
+        alertDiv.textContent = 'File size exceeds 2 MB. Please upload a smaller file.';
+        alertDiv.classList.remove('hidden');
+        event.target.value = '';
+        setTimeout(() => alertDiv.classList.add('hidden'), 3000);
+        return;
+      }
+    }
+})})
+
+</script>
 </html>

@@ -18,7 +18,7 @@ management_name_data = {
     },
     "Mystery Maze": {
         "Mystery Maze": {
-            "price": 0,
+            "price": 600,
             "event_type": "team",
             "min_participants": 2,
             "max_participants": 5,
@@ -60,11 +60,11 @@ management_name_data = {
             
         },
         "MUN Team": {
-            "price": 40_000,
+            "price": 41_800,
             "event_type": "team",
             "min_participants": 10,
-            "max_participants": 15,
-            "min_managers": 1,
+            "max_participants": 25,
+            "min_managers": 2,
             "max_managers": 2,
             "date_of_event": "24/01/2025 to 25/01/2025",
             "age_category": "15+",
