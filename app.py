@@ -30,20 +30,16 @@ managers_collection = db["Managers"]
 participants_collection = db["Participants"]
 
 
-def check_if_user_exists():
-    if "user" not in session.keys():
-        return redirect(url_for("main"))
 
 
 @app.route("/")
 def main():
-
     return render_template("index.html")
 
 
 @app.route("/submit_user_information", methods=["GET", "POST"])
 def submit_user_information():
-    check_if_user_exists()
+    
     if request.method == "POST":
         # Capture form fields
         first_name = request.form.get("first_name")
@@ -68,9 +64,9 @@ def submit_user_information():
 
 @app.route("/choose_areas")
 def choose_areas():
-    sport_names = list(sports_name_data.keys())
-    # print(sports_name_data[sport]["price"])
-    return check_if_user_exists() or render_template("choose_area.html")
+    if session.get('has_submitted', False):
+        return redirect(url_for('success'))
+    return render_template("choose_area.html")
 
 
 @app.route("/area_submit", methods=["GET", "POST"])
@@ -86,6 +82,8 @@ def area_choice():
 
 @app.route("/choose_events", methods=["GET", "POST"])
 def choose_events():
+    if session.get('has_submitted', False):
+        return redirect(url_for('success'))
     sport_names = list(sports_name_data.keys())
     sport_categories = {}
     for sport in sport_names:
@@ -122,6 +120,8 @@ def choose_events():
 
 @app.route("/submit", methods=["GET", "POST"])
 def submit():
+    if session.get('has_submitted', False):
+        return redirect(url_for('success'))
     user_cost = 0
     chosen_sports = []
     chosen_culturals = []
@@ -262,7 +262,7 @@ def submit():
         user["total_cost"] = user_cost
         session["user"] = user
 
-    return render_template(
+    return  render_template(
         "summary.html",
         chosen_sports=c_sports,
         chosen_culturals=c_culturals,
@@ -381,6 +381,16 @@ def management_particpant_submit():
             "managers": managers,
             "participants": participants,
         }
+        user["need_gst"] = request.form.getlist("need_gst")
+        payment_image = request.files.get("paymentImage")
+        payment_image_id = fs.put(
+            payment_image, filename=f"{user['first_name']}_payment_image", content_type=image.content_type
+        )
+        payment_transaction_id = request.form.getlist("paymentId")
+        user["payment_image"] = payment_image_id
+        user["payment_transaction_id"] = payment_image_id
+        
+
 
     print(user)
 
@@ -421,24 +431,15 @@ def management_particpant_submit():
 
     user = remove_dollar_sign(user)
     users_collection.insert_one(user)
+    session["has_submitted"] = True
     session["user"] = json.loads(json_util.dumps(user))
-    return session["user"]
+    return redirect(url_for('success'))
 
 
-@app.route("/update_total_cost", methods=["POST"])
-def update_total_cost():
-    data = request.get_json()  # Get JSON data from the client
-    num_mun_participants = data.get("numMUNParticipants", 0)
-    cost_per_mun_participant = 2000
-
-    # Calculate the new total cost
-    user = session["user"]
-    user["total_cost"] = 20000 + (num_mun_participants - 10) * cost_per_mun_participant
-    session["user"] = user
-    print(user)
-
-    return redirect(url_for("main"))
+@app.route('/success')
+def success():
+    return render_template('success.html')
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=8080)

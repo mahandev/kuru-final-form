@@ -85,7 +85,7 @@
                                         <h4 class="text-lg mb-2 font-medium text-[#FF5F1F]">{{ sport }}</h4>
                                         {% for category in sport_categories[sport] %}
                                         <div class="block flex form__group" >
-                                            <input  type="checkbox"  name="sports" value="{{ sport }}-{{ category }}" class="cursor-pointer mt-1 w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            <input  type="checkbox" id="sports" name="sports" value="{{ sport }}-{{ category }}" class="cursor-pointer mt-1 w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                             >
                                             <label for="{{ category }}" class="mb-2 ml-2 text-sm text-white"
                                             >{{ category }} ₹{{ sports_name_data[sport][category]["price"] }}</label>
@@ -108,7 +108,7 @@
                             <h4 class="text-lg mb-2 font-medium text-[#FF5F1F]">{{ cultural }}</h4>
                             {% for category in cultural_categories[cultural] %}
                             <div class="block flex form__group" >
-                                <input  type="checkbox" id="{{ cultural_name_data[cultural] }}" name="culturals" value="{{ cultural }}-{{ category }}" class="cursor-pointer w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                <input  type="checkbox" id="cultural" name="culturals" value="{{ cultural }}-{{ category }}" class="cursor-pointer w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                 >
                                 <label for="{{ category }}" class="mb-2 ml-2 text-sm text-white"
                                 >{{ category }} ₹{{ cultural_name_data[cultural][category]["price"] }}</label>
@@ -132,7 +132,7 @@
                             <h4 class="text-lg mb-2 font-medium text-[#FF5F1F]">{{ management }}</h4>
                             {% for category in management_categories[management] %}
                             <div class="flex form__group md:w-[330px]" >
-                                <input  type="checkbox" id="{{management}}" name="management" value="{{ management }}-{{ category }}" class="cursor-pointer w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                <input  type="checkbox" id="management" name="management" value="{{ management }}-{{ category }}" class="cursor-pointer w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                 >
                                 <label for="{{ category }}" class="mb-2 ml-2 text-sm text-white"
                                 >{{ category }} ₹{{ management_name_data[management][category]["price"] }}</label>
@@ -170,6 +170,40 @@
                 })
             })
         })
+
+        document.querySelector("form").addEventListener("submit", (event) => {
+        const sports_checkboxes = document.querySelectorAll("input[type='checkbox'][id='sports']");
+        const cultural_checkboxes = document.querySelectorAll("input[type='checkbox'][id='cultural']");
+        const management_checkboxes = document.querySelectorAll("input[type='checkbox'][id='management']");
+        const isSportsChecked = Array.from(sports_checkboxes).some(checkbox => checkbox.checked);
+        const isCulturalChecked = Array.from(cultural_checkboxes).some(checkbox => checkbox.checked);
+        const isManagementChecked = Array.from(management_checkboxes).some(checkbox => checkbox.checked);
+
+        console.log(sports_checkboxes)
+        console.log(cultural_checkboxes)
+        console.log(management_checkboxes)
+        if (sports_checkboxes.length > 0) {
+          if (!isSportsChecked) {
+            event.preventDefault();
+            alert("Please check sport")
+          }
+        }
+
+        if (cultural_checkboxes.length > 0) {
+          if (!isCulturalChecked) {
+            event.preventDefault();
+            alert("Please check cultural")
+          }
+        }
+
+        if (management_checkboxes.length > 0  ) {
+          if (!isManagementChecked) {
+            event.preventDefault();
+            alert("Please check management")
+          }
+        }
+});
+
 </script>
 </body>
 </html>
