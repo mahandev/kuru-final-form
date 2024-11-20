@@ -1,3 +1,5 @@
+import uuid
+
 cultural_name_data = {
     "Western": {
         "Step Off [Western]": {
@@ -10,7 +12,8 @@ cultural_name_data = {
             "date_of_event": "22/01/2025 to 26/01/2025",
             "age_category": "16 to 27",
             "docs_required": "ID Proof",
-        }, 
+            "unique_id": str(uuid.uuid4()),
+        },
         "Footloose [Western]": {
             "price": 250,
             "event_type": "single",
@@ -21,9 +24,10 @@ cultural_name_data = {
             "date_of_event": "22/01/2025 to 26/01/2025",
             "age_category": "16 to 27",
             "docs_required": "ID Proof",
+            "unique_id": str(uuid.uuid4()),
+        },
     },
-    },
-    "Art":{
+    "Art": {
         "Pixelate [Art]": {
             "price": 150,
             "event_type": "single",
@@ -34,34 +38,36 @@ cultural_name_data = {
             "date_of_event": "22/01/2025",
             "age_category": "17 to 27",
             "docs_required": "ID Proof",
+            "unique_id": str(uuid.uuid4()),
         },
     },
-   "Classical":{
-    "Nritya Sangam [Classical]": {
-        "price": 1_500,
-        "event_type": "team",
-        "min_participants": 7,
-        "max_participants": 15,
-        "min_managers": 0,
-        "max_managers": 0,
-        "date_of_event": "22/01/2025 to 26/01/2025",
-        "age_category": "16 to 27",
-        "docs_required": "ID Proof",
+    "Classical": {
+        "Nritya Sangam [Classical]": {
+            "price": 1_500,
+            "event_type": "team",
+            "min_participants": 7,
+            "max_participants": 15,
+            "min_managers": 0,
+            "max_managers": 0,
+            "date_of_event": "22/01/2025 to 26/01/2025",
+            "age_category": "16 to 27",
+            "docs_required": "ID Proof",
+            "unique_id": str(uuid.uuid4()),
+        },
+        "Ek taal [Classical]": {
+            "price": 250,
+            "event_type": "single",
+            "min_participants": 1,
+            "max_participants": 1,
+            "min_managers": 0,
+            "max_managers": 0,
+            "date_of_event": "22/01/2025 to 26/01/2025",
+            "age_category": "16 to 27",
+            "docs_required": "ID Proof",
+            "unique_id": str(uuid.uuid4()),
+        },
     },
-    
-    "Ek taal [Classical]": {
-        "price": 250,
-        "event_type": "single",
-        "min_participants": 1,
-        "max_participants": 1,
-        "min_managers": 0,
-        "max_managers": 0,
-        "date_of_event": "22/01/2025 to 26/01/2025",
-        "age_category": "16 to 27",
-        "docs_required": "ID Proof",
-    },
-   },
-    "Music":{
+    "Music": {
         "Battle of the Bands [Music]": {
             "price": 600,
             "event_type": "team",
@@ -72,6 +78,7 @@ cultural_name_data = {
             "date_of_event": "22/01/2025",
             "age_category": "17+",
             "docs_required": "ID Proof",
+            "unique_id": str(uuid.uuid4()),
         },
         "Cadence [Music]": {
             "price": 250,
@@ -83,9 +90,10 @@ cultural_name_data = {
             "date_of_event": "22/01/2025 to 26/01/2025",
             "age_category": "17+",
             "docs_required": "ID Proof",
+            "unique_id": str(uuid.uuid4()),
         },
     },
-    "Photography":{
+    "Photography": {
         "Drishti [Photography]": {
             "price": 250,
             "event_type": "single",
@@ -96,9 +104,10 @@ cultural_name_data = {
             "date_of_event": "22/01/2025 to 26/01/2025",
             "age_category": "16-27",
             "docs_required": "ID Proof",
+            "unique_id": str(uuid.uuid4()),
         },
     },
-    "Poetry":{
+    "Poetry": {
         "Kalam Ki Kala [Poetry]": {
             "price": 180,
             "event_type": "single",
@@ -109,6 +118,7 @@ cultural_name_data = {
             "date_of_event": "22/01/2025 to 26/01/2025",
             "age_category": "16-27",
             "docs_required": "ID Proof",
+            "unique_id": str(uuid.uuid4()),
         },
     },
-}       
+}
