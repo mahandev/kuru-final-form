@@ -515,7 +515,7 @@
                         <div class="py-5 border-b border-gray-200 dark:border-gray-700">
                           {% for i in range(0, number_of_particpants[management]["min"]) %}
                           <div class="flex flex-col form-group mb-8">
-                            <!-- <label>Participant Name:</label> -->
+                            <label>Participant Name</label>
                             <input
                               type="text"
                               name="participantName{{management}}[]"
@@ -523,7 +523,7 @@
                               placeholder="Participant Name:"
                               required
                             />
-                            <!-- <label>Participant Phone:</label> -->
+                            <label>Participant Phone Number</label>
                             <input
                               type="text"
                               name="participantPhone{{management}}[]"
@@ -531,7 +531,7 @@
                               placeholder="Participant Phone:"
                               required
                             />
-                            <label>Participant Image:</label>
+                            <label>Participant Image</label>
                             <input
                               type="file"
                               name="participantImage{{management}}[]"
@@ -540,8 +540,28 @@
                               placeholder="Participant Image:"
                               required
                             />
+                            {% if management == "MUN Team" or management == "MUN Solo"%}
+                            <label>Participant Country Preference</label>
+                            <input
+                              type="text"
+                              name="participantCountryPreference{{management}}[]"
+                              class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                              placeholder="Participant Country Preference, Add 3 Values, Commma Seperated:"
+                              required
+                            />
+
+                            <label>Participant Committee Preference</label>
+                            <select id="committee" name="participantCommitteePreference{{management}}[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                              <option value="United Nations Security Council (UNSC)">United Nations Security Council (UNSC)</option>                              </option>
+                              <option value="United Nations Human Rights Council (UNHRC)">United Nations Human Rights Council (UNHRC)</option>
+                              <option value="⁠All India Political Parties Meet (AIPPM)">⁠⁠All India Political Parties Meet (AIPPM)</option>
+                              <option value="⁠International Press Corps (IPC)">American War Room⁠International Press Corps (IPC)</option>
+                              <option value="American War Room">American War Room</option>
+                            </select>
                             
+                          {% endif %}
                           </div>
+                          
                           {%endfor%}
                         </div>
                       </div>
@@ -640,6 +660,26 @@
                               placeholder="Manager Image:"
                               required
                             />
+                            {% if management == "MUN Team" or management == "MUN Solo"%}
+                            <label>Participant Country Preference</label>
+                            <input
+                              type="text"
+                              name="participantCountryPreference{{management}}[]"
+                              class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                              placeholder="Participant Country Preference, Add 3 Values, Commma Seperated:"
+                              required
+                            />
+
+                            <label>Participant Committee Preference</label>
+                            <select id="committee" name="participantCommitteePreference{{management}}[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                              <option value="United Nations Security Council (UNSC)">United Nations Security Council (UNSC)</option>                              </option>
+                              <option value="United Nations Human Rights Council (UNHRC)">United Nations Human Rights Council (UNHRC)</option>
+                              <option value="⁠All India Political Parties Meet (AIPPM)">⁠⁠All India Political Parties Meet (AIPPM)</option>
+                              <option value="⁠International Press Corps (IPC)">American War Room⁠International Press Corps (IPC)</option>
+                              <option value="American War Room">American War Room</option>
+                            </select>
+                            
+                          {% endif %}
                           </div>
                           {%endfor%}
                         </div>

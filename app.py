@@ -274,8 +274,8 @@ def submit():
         sports_ids=sports_ids,
         cultural_ids=cultural_ids,
         management_ids=management_ids,
-        # mun_present = mun_present,
-        # use_qr=use_qr
+        mun_present = mun_present,
+        use_qr=use_qr
     )
 
 

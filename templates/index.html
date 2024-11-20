@@ -22,7 +22,7 @@
 </head>
 <body style="font-family: Oswald;" class="bg-black">
   
-    <div class="flex flex-col mt-16 justify-center items-center h-screen">
+    <div class="flex flex-col mt-16 justify-center items-center">
         <div class="flex justify-between items-center p-6 header-img-logo">
             <img class="w-[320px] md:w-[475px]" src="{{ url_for('static', filename = 'logo.png') }}" alt="Kurukshetra 2025">
         </div>
@@ -87,7 +87,7 @@
         </div>
         <div class="mb-5">
 
-        <label for="shuttle" class="block mb-2 text-sm font-medium text-white">Interested in Shuttle from FC Road to FLAME Campus?</label>
+        <label for="shuttle" class="block mb-2 text-sm font-medium text-white">Interested in taking a shuttle to FLAME University at subsidized rate?</label>
         <select id="shuttle" name="shuttle_interest" required class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-4 p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
         >
             <option value="Yes" {% if session.get('user') and session['user'].get('shuttle_interest') == 'Yes' %}selected{% endif %}>Yes</option>
