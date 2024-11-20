@@ -616,6 +616,9 @@
                               <span class="font-medium">Alert!</span>
                             </div>
                             {% if management == "MUN Team" or management == "MUN Solo"%}
+                            <button type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                              <a target="_blank" href="https://docs.google.com/spreadsheets/d/1SLW7LDHFziBnAM8AuFVbRuw66bYCh_AcsVxVKxcbqAk/edit?usp=sharing"> Refer to this while filling out the form </a>
+                            </button>
                             <label>Participant {{i+1}} Country Preference</label>
                             <input
                               type="text"
@@ -686,6 +689,30 @@
                               accept="image/*"
                               placeholder="Participant Image:"
                             />
+                            {% if management == "MUN Team" or management == "MUN Solo"%}
+                            <button type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                              <a target="_blank" href="https://docs.google.com/spreadsheets/d/1SLW7LDHFziBnAM8AuFVbRuw66bYCh_AcsVxVKxcbqAk/edit?usp=sharing"> Refer to this while filling out the form </a>
+                            </button>
+                
+                            <label>Optional Participant {{i+1}} Country Preference</label>
+                            <input
+                              type="text"
+                              name="participantCountryPreference{{management}}[]"
+                              class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                              placeholder="Optional Participant {{i+1}} Country Preference, Add 3 Values, Commma Seperated:"
+                              required
+                            />
+
+                            <label>Optional Participant {{i+1}} Committee Preference</label>
+                            <select id="committee" name="participantCommitteePreference{{management}}[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                              <option value="United Nations Security Council (UNSC)">United Nations Security Council (UNSC)</option>                              </option>
+                              <option value="United Nations Human Rights Council (UNHRC)">United Nations Human Rights Council (UNHRC)</option>
+                              <option value="⁠All India Political Parties Meet (AIPPM)">⁠⁠All India Political Parties Meet (AIPPM)</option>
+                              <option value="⁠International Press Corps (IPC)">American War Room⁠International Press Corps (IPC)</option>
+                              <option value="American War Room">American War Room</option>
+                            </select>
+                            
+                          {% endif %}
                             <div id="{{i}}-op-{management_ids[management]}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
                               <span class="font-medium">Alert!</span>
                             </div>
@@ -747,6 +774,7 @@
                               <span class="font-medium">Alert!</span>
                             </div>
                             {% if management == "MUN Team" or management == "MUN Solo"%}
+                            
                             <label>Participant {{i+1}} Country Preference</label>
                             <input
                               type="text"
@@ -859,6 +887,7 @@
           <input
           type="text"
           name="paymentId"
+          pattern=".{12,18}" 
           class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
           placeholder="Enter your transaction ID"
         />
