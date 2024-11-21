@@ -132,6 +132,7 @@
                             <!-- <label class="block mb-2 text-sm font-medium text-white">Participant Phone:</label> -->
                             <input
                               type="phone"
+                              pattern="[0-9]{10}"
                               name="participantPhone{{sport}}[]"
                               class="form-control rounded-none my-2 rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               required
@@ -181,6 +182,7 @@
                             <!-- <label>Participant Phone:</label> -->
                             <input
                               type="phone"
+                              pattern="[0-9]{10}"
                               name="participantPhone{{sport}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Optional Participant {{i+1}} Phone:"
@@ -231,6 +233,7 @@
                             <!-- <label>Manager Phone:</label> -->
                             <input
                               type="phone"
+                              pattern="[0-9]{10}"
                               name="managerPhone{{sport}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Manager {{i+1}} Phone"
@@ -280,6 +283,7 @@
                             <!-- <label>Manager Phone:</label> -->
                             <input
                               type="phone"
+                              pattern="[0-9]{10}"
                               name="managerPhone{{sport}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Optional Manager {{i+1}} Phone:"
@@ -357,6 +361,7 @@
                               <!-- <label>Participant Phone:</label> -->
                               <input
                                 type="phone"
+                                pattern="[0-9]{10}"
                                 name="participantPhone{{cultural}}[]"
                                 class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="Participant {{i+1}} Phone:"
@@ -413,6 +418,7 @@
                               <!-- <label>Participant Phone:</label> -->
                               <input
                                 type="phone"
+                                pattern="[0-9]{10}"
                                 name="participantPhone{{cultural}}[]"
                                 class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="Optional Participant {{i+1}} Phone:"
@@ -467,6 +473,7 @@
                               <!-- <label>Manager Phone:</label> -->
                               <input
                                 type="phone"
+                                pattern="[0-9]{10}"
                                 name="managerPhone{{cultural}}[]"
                                 class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="Manager {{i+1}} Phone:"
@@ -521,6 +528,7 @@
                               <!-- <label>Manager Phone:</label> -->
                               <input
                                 type="phone"
+                                pattern="[0-9]{10}"
                                 name="managerPhone{{cultural}}[]"
                                 class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="Optional Manager {{i+1}} Phone:"
@@ -598,6 +606,7 @@
                             />
                             <input
                               type="phone"
+                              pattern="[0-9]{10}"
                               name="participantPhone{{management}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Participant {{i+1}} Phone:"
@@ -616,7 +625,7 @@
                               <span class="font-medium">Alert!</span>
                             </div>
                             {% if management == "MUN Team" or management == "MUN Solo"%}
-                            <button type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            <button type="button" class="text-white my-6 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                               <a target="_blank" href="https://docs.google.com/spreadsheets/d/1SLW7LDHFziBnAM8AuFVbRuw66bYCh_AcsVxVKxcbqAk/edit?usp=sharing"> Refer to this while filling out the form </a>
                             </button>
                             <label>Participant {{i+1}} Country Preference</label>
@@ -676,6 +685,7 @@
                             <!-- <label>Participant Phone:</label> -->
                             <input
                               type="phone"
+                              pattern="[0-9]{10}"
                               name="participantPhone{{management}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Optional Participant {{i+1}} Phone:"
@@ -690,7 +700,7 @@
                               placeholder="Participant Image:"
                             />
                             {% if management == "MUN Team" or management == "MUN Solo"%}
-                            <button type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            <button type="button" class="text-white my-6 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                               <a target="_blank" href="https://docs.google.com/spreadsheets/d/1SLW7LDHFziBnAM8AuFVbRuw66bYCh_AcsVxVKxcbqAk/edit?usp=sharing"> Refer to this while filling out the form </a>
                             </button>
                 
@@ -755,6 +765,7 @@
                             <!-- <label>Manager Phone:</label> -->
                             <input
                               type="phone"
+                              pattern="[0-9]{10}"
                               name="managerPhone{{management}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Manager {{i+1}} Phone:"
@@ -785,8 +796,8 @@
                             />
 
                             <label>Participant {{i+1}} Committee Preference</label>
-                            <select id="committee" name="participantCommitteePreference{{management}}[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                              <option value="United Nations Security Council (UNSC)">United Nations Security Council (UNSC)</option>                              </option>
+                            <select id="committee" name="participantCommitteePreference{{management}}[]" class="bg-[#282828] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+                              <option value="United Nations Security Council (UNSC)">United Nations Security Council (UNSC)</option>
                               <option value="United Nations Human Rights Council (UNHRC)">United Nations Human Rights Council (UNHRC)</option>
                               <option value="⁠All India Political Parties Meet (AIPPM)">⁠⁠All India Political Parties Meet (AIPPM)</option>
                               <option value="⁠International Press Corps (IPC)">American War Room⁠International Press Corps (IPC)</option>
@@ -828,6 +839,7 @@
                             <!-- <label>Manager Phone:</label> -->
                             <input
                               type="phone"
+                              pattern="[0-9]{10}"
                               name="managerPhone{{management}}[]"
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Optional Manager {{i+1}} Phone:"
@@ -858,7 +870,7 @@
           <!-- Download Invoice -->
 
           <div class="flex items-center mb-4 mt-10">
-            <input id="link-checkbox" type="checkbox" name="need_gst" value="need_gst" class="cursor-pointer check-option w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] dark:focus:ring-[#FF5F1F] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            <input id="link-checkbox" type="checkbox" name="need_gst" value="need_gst" class="cursor-pointer bg-black check-option w-5 h-5 text-[#FF5F1F] rounded focus:ring-[#FF5F1F] focus:ring-[#FF5F1F] ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600"
             >
             <label for="link-checkbox" class="cursor-pointer ms-2 text-sm font-medium text-gray-300">Get GST invoice (Physical Bill)?</label>
           </div>
