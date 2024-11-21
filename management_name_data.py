@@ -60,12 +60,12 @@ management_name_data = {
             
         },
         "MUN Team": {
-            "price": 41_800,
+            "price": 40_000,
             "event_type": "team",
             "min_participants": 10,
             "max_participants": 25,
-            "min_managers": 2,
-            "max_managers": 2,
+            "min_managers": 0,
+            "max_managers": 0,
             "date_of_event": "24/01/2025 to 25/01/2025",
             "age_category": "15+",
             "docs_required": "ID Proof",

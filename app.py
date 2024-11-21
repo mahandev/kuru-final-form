@@ -11,6 +11,7 @@ from management_name_data import management_name_data
 from gridfs import GridFS
 import json
 from flask_session import Session
+from flask_cors import CORS
 
 load_dotenv()
 
@@ -21,6 +22,7 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 mongo = PyMongo(app)
+CORS(app)
 
 # Access collections
 db = mongo.db
@@ -440,4 +442,7 @@ def management_particpant_submit():
 def success():
     return render_template('success.html')
 
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
