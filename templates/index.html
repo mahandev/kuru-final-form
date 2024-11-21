@@ -127,8 +127,8 @@
         <label for="shuttle" class="block mb-2 text-sm font-medium text-white">Interested in taking a shuttle to FLAME University at subsidized rate?</label>
         <select id="shuttle" name="shuttle_interest" required class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-4 p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
         >
-            <option value="Yes" {% if session.get('user') and session['user'].get('shuttle_interest') == 'Yes' %}selected{% endif %}>Yes</option>
             <option value="No" {% if session.get('user') and session['user'].get('shuttle_interest') == 'No' %}selected{% endif %}>No</option>
+            <option value="Yes" {% if session.get('user') and session['user'].get('shuttle_interest') == 'Yes' %}selected{% endif %}>Yes</option>
         </select>
         </div>
         </div>
