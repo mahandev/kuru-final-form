@@ -916,6 +916,7 @@
         />
           <button
             type="submit"
+            id="submit-event-btn"
             class="cursor-pointer text-white text-center focus:bg-[#ff51f] focus:ring-1 focus:outline-none focus:ring-[#FF7F50] rounded-lg text-lg font-medium px-5 py-4 text-center bg-[#FF5F1F] hover:bg-[#EC5800] me-2 mb-2"
           >
             Submit All Events
@@ -963,6 +964,10 @@
     // event.preventDefault();
   const loadingScreen = document.createElement('div');
   loadingScreen.id = 'loading-screen';
+
+  const submitButton = document.getElementById('submit-event-btn');
+  submitButton.disabled = true;
+  submitButton.classList.add('bg-gray-400', 'cursor-not-allowed');
 
   const gif = document.createElement('img');
   gif.src = "{{ url_for('static', filename='loader-fire.gif') }}";
