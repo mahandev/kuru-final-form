@@ -91,6 +91,7 @@
           action="{{ url_for('management_particpant_submit') }}"
           method="POST"
           enctype="multipart/form-data"
+          id="data-form"
           class="md:w-[600px]"
         >
           {% if chosen_sports %}
@@ -956,6 +957,21 @@
       }
     }
 })})
+
+  // submit event
+  document.getElementById('data-form').addEventListener('submit', function (event) {
+    // event.preventDefault();
+  const loadingScreen = document.createElement('div');
+  loadingScreen.id = 'loading-screen';
+
+  const gif = document.createElement('img');
+  gif.src = "{{ url_for('static', filename='loader-fire.gif') }}";
+  gif.alt = "Loading...";
+  gif.className = "w-[250px] h-[250px]";
+
+  loadingScreen.appendChild(gif);
+  document.body.appendChild(loadingScreen);
+  });
 
 </script>
 </html>
