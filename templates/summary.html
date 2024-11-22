@@ -600,6 +600,13 @@
                       </h2>
                       <div id="accordion-flush-body-p-{{management_ids[management]}}" class="hidden" aria-labelledby="accordion-flush-heading-p-{{management_ids[management]}}">
                         <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                          {% if management == "MUN Team" or management == "MUN Solo"%}
+                          <div class="flex flex-col items-center justify-center">
+                            <button type="button" class="text-white my-6 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                              <a target="_blank" href="https://docs.google.com/spreadsheets/d/1SLW7LDHFziBnAM8AuFVbRuw66bYCh_AcsVxVKxcbqAk/edit?usp=sharing"> Refer to this while filling out the form </a>
+                            </button>
+                          </div>
+                          {% endif %}
                           {% for i in range(0, number_of_particpants[management]["min"]) %}
                           <label class="block mb-2 text-sm font-medium text-white">Participant {{i+1}}</label>
                           <div class="flex flex-col form-group mb-8">
@@ -632,9 +639,9 @@
                               <span class="font-medium">Alert!</span>
                             </div>
                             {% if management == "MUN Team" or management == "MUN Solo"%}
-                            <button type="button" class="text-white my-6 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            <!-- <button type="button" class="text-white my-6 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                               <a target="_blank" href="https://docs.google.com/spreadsheets/d/1SLW7LDHFziBnAM8AuFVbRuw66bYCh_AcsVxVKxcbqAk/edit?usp=sharing"> Refer to this while filling out the form </a>
-                            </button>
+                            </button> -->
                             <label>Participant {{i+1}} Country Preference</label>
                             <input
                               type="text"
@@ -678,6 +685,13 @@
                         </button>
                       <div id="accordion-flush-body-op-{{management_ids[management]}}" class="hidden" aria-labelledby="accordion-flush-heading-op-{{management_ids[management]}}">
                         <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                          {% if management == "MUN Team" or management == "MUN Solo"%}
+                          <div class="flex flex-col items-center justify-center">
+                          <button type="button" class="text-white my-6 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            <a target="_blank" href="https://docs.google.com/spreadsheets/d/1SLW7LDHFziBnAM8AuFVbRuw66bYCh_AcsVxVKxcbqAk/edit?usp=sharing"> Refer to this while filling out the form </a>
+                          </button>
+                          </div>
+                          {% endif %}
                           {% for i in range(0,
                             (number_of_particpants[management]["max"] -
                             number_of_particpants[management]["min"])) %}
@@ -707,11 +721,11 @@
                               placeholder="Participant Image:"
                             />
                             {% if management == "MUN Team" or management == "MUN Solo"%}
-                            <button type="button" class="text-white my-6 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            <!-- <button type="button" class="text-white my-6 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                               <a target="_blank" href="https://docs.google.com/spreadsheets/d/1SLW7LDHFziBnAM8AuFVbRuw66bYCh_AcsVxVKxcbqAk/edit?usp=sharing"> Refer to this while filling out the form </a>
-                            </button>
+                            </button> -->
                 
-                            <label>Optional Participant {{i+1}} Country Preference</label>
+                            <label class="mt-4 mb-2">Optional Participant {{i+1}} Country Preference</label>
                             <input
                               type="text"
                               name="participantCountryPreference{{management}}[]"
@@ -720,14 +734,16 @@
                               required
                             />
 
-                            <label>Optional Participant {{i+1}} Committee Preference</label>
-                            <select id="committee" name="participantCommitteePreference{{management}}[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                              <option value="United Nations Security Council (UNSC)">United Nations Security Council (UNSC)</option>                              </option>
+                            <label class="mt-4 mb-2">Optional Participant {{i+1}} Committee Preference</label>
+                            <select id="committee" name="participantCommitteePreference{{management}}[]"  class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-4 p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+                              <option value="United Nations Security Council (UNSC)">United Nations Security Council (UNSC)</option>
                               <option value="United Nations Human Rights Council (UNHRC)">United Nations Human Rights Council (UNHRC)</option>
                               <option value="⁠All India Political Parties Meet (AIPPM)">⁠⁠All India Political Parties Meet (AIPPM)</option>
                               <option value="⁠International Press Corps (IPC)">American War Room⁠International Press Corps (IPC)</option>
                               <option value="American War Room">American War Room</option>
                             </select>
+
+                            
                             
                           {% endif %}
                             <div id="{{i}}-op-{management_ids[management]}" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
@@ -793,7 +809,7 @@
                             </div>
                             {% if management == "MUN Team" or management == "MUN Solo"%}
                             
-                            <label>Participant {{i+1}} Country Preference</label>
+                            <label class="mt-4 mb-2">Participant {{i+1}} Country Preference</label>
                             <input
                               type="text"
                               name="participantCountryPreference{{management}}[]"
@@ -802,7 +818,7 @@
                               required
                             />
 
-                            <label>Participant {{i+1}} Committee Preference</label>
+                            <label class="mt-4 mb-2">Participant {{i+1}} Committee Preference</label>
                             <select id="committee" name="participantCommitteePreference{{management}}[]" class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-4 p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                               <option value="United Nations Security Council (UNSC)">United Nations Security Council (UNSC)</option>
                               <option value="United Nations Human Rights Council (UNHRC)">United Nations Human Rights Council (UNHRC)</option>
