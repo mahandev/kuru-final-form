@@ -83,7 +83,7 @@
       <div
         class="border-x border-y p-8 rounded-lg drop-shadow-lg border-slate-400 flex flex-col max-w-[900px] justify-between items-center p-4 leading-normal bg-[#1E1E1E]"
       >
-        <h1 class="text-4xl md:text-5xl mb-4 font-extrabold text-white">
+        <h1 class="text-3xl md:text-4xl mb-4 font-extrabold text-white">
           Events Summary
         </h1>
 
@@ -143,7 +143,7 @@
                               required
                               placeholder="Participant {{i+1}} Phone:"
                             />
-                            <!-- <label class="block mb-2 text-sm font-medium text-white">Participant Image:</label> -->
+                            <label class="block mb-2 text-sm font-medium text-white">Participant Image {{i+1}}:</label>
                             <input
                               type="file"
                               name="participantImage{{sport}}[]"
@@ -192,7 +192,7 @@
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Optional Participant {{i+1}} Phone:"
                             />
-                            <!-- <label>Participant Image:</label> -->
+                            <label class="block mb-2 text-sm font-medium text-white">Optional Participant {{i+1}} Image:</label>
                             <input
                               type="file"
                               name="participantImage{{sport}}[]"
@@ -244,7 +244,7 @@
                               placeholder="Manager {{i+1}} Phone"
                               required
                             />
-                            <!-- <label>Manager Image:</label> -->
+                            <label class="block mb-2 text-sm font-medium text-white">Manager {{i+1}} Image:</label>
                             <input
                               type="file"
                               name="managerImage{{sport}}[]"
@@ -293,7 +293,7 @@
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Optional Manager {{i+1}} Phone:"
                             />
-                            <!-- <label>Manager Image:</label> -->
+                            <label class="block mb-2 text-sm font-medium text-white">Optional Manager {{i+1}} Image:</label>
                             <input
                               type="file"
                               name="managerImage{{sport}}[]"
@@ -372,6 +372,7 @@
                                 placeholder="Participant {{i+1}} Phone:"
                                 required
                               />
+                              <label class="block mb-2 text-sm font-medium text-white">Participant {{i+1}} Image:</label>
                               <input
                                 type="file"
                                 name="participantImage{{cultural}}[]"
@@ -428,7 +429,7 @@
                                 class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="Optional Participant {{i+1}} Phone:"
                               />
-                              <!-- <label>Participant Image:</label> -->
+                              <label class="block mb-2 text-sm font-medium text-white">Optional Participant {{i+1}} Image:</label>
                               <input
                                 type="file"
                                 name="participantImage{{cultural}}[]"
@@ -484,7 +485,7 @@
                                 placeholder="Manager {{i+1}} Phone:"
                                 required
                               />
-                              <!-- <label>Manager Image:</label> -->
+                              <label class="block mb-2 text-sm font-medium text-white">Manager {{i+1}} Image:</label>
                               <input
                                 type="file"
                                 name="managerImage{{cultural}}[]"
@@ -538,7 +539,7 @@
                                 class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="Optional Manager {{i+1}} Phone:"
                               />
-                              <!-- <label>Manager Image:</label> -->
+                              <label class="block mb-2 text-sm font-medium text-white">Optional Manager {{i+1}} Image:</label>
                               <input
                                 type="file"
                                 name="managerImage{{cultural}}[]"
@@ -617,6 +618,7 @@
                               placeholder="Participant {{i+1}} Phone:"
                               required
                             />
+                            <label class="block mb-2 text-sm font-medium text-white">Participant {{i+1}} Image:</label>
                             <input
                               type="file"
                               name="participantImage{{management}}[]"
@@ -695,7 +697,7 @@
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Optional Participant {{i+1}} Phone:"
                             />
-                            <!-- <label>Participant Image:</label> -->
+                            <label class="block mb-2 text-sm font-medium text-white">Optional Participant {{i+1}} Image:</label>
                             <input
                               type="file"
                               name="participantImage{{management}}[]"
@@ -776,7 +778,7 @@
                               placeholder="Manager {{i+1}} Phone:"
                               required
                             />
-                            <!-- <label>Manager Image:</label> -->
+                            <label class="block mb-2 text-sm font-medium text-white">Manager {{i+1}} Image:</label>
                             <input
                               type="file"
                               name="managerImage{{management}}[]"
@@ -849,7 +851,7 @@
                               class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Optional Manager {{i+1}} Phone:"
                             />
-                            <!-- <label>Manager Image:</label> -->
+                            <label class="block mb-2 text-sm font-medium text-white">Optional Manager {{i+1}} Image:</label>
                             <input
                               type="file"
                               name="managerImage{{management}}[]"
