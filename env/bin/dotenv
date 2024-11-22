@@ -1,4 +1,4 @@
-#!/home/jitendra/kuru-final-form/env/bin/python3.11
+#!/home/jitendra/kuru-final-form/env/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
