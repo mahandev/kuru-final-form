@@ -796,7 +796,7 @@
                             />
 
                             <label>Participant {{i+1}} Committee Preference</label>
-                            <select id="committee" name="participantCommitteePreference{{management}}[]" class="bg-[#282828] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+                            <select id="committee" name="participantCommitteePreference{{management}}[]" class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-4 p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                               <option value="United Nations Security Council (UNSC)">United Nations Security Council (UNSC)</option>
                               <option value="United Nations Human Rights Council (UNHRC)">United Nations Human Rights Council (UNHRC)</option>
                               <option value="⁠All India Political Parties Meet (AIPPM)">⁠⁠All India Political Parties Meet (AIPPM)</option>
@@ -894,14 +894,20 @@
             name="paymentImage"
             class="form-control-file my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
             placeholder="Payment Image:"
+            data-alert-id="transaction-id"
+            required
             accept="image/*"
           />
+          <div id="transaction-id" class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+            <span class="font-medium">Alert!</span>
+          </div>
           <input
           type="text"
           name="paymentId"
           pattern=".{12,18}" 
           class="form-control my-2 rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
           placeholder="Enter your transaction ID"
+          required
         />
           <button
             type="submit"
@@ -923,7 +929,7 @@
   document.querySelectorAll('.form-control-file').forEach(input => {
   input.addEventListener('change', function (event) {
     const file = event.target.files[0];
-    const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
+    const maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
     const allowedExtensions = ['image/jpeg', 'image/jpg', 'image/png'];
     const alertId = event.target.getAttribute('data-alert-id');
     const alertDiv = document.getElementById(alertId);
@@ -938,7 +944,7 @@
       }
 
       if (file.size > maxSizeInBytes) {
-        alertDiv.textContent = 'File size exceeds 2 MB. Please upload a smaller file.';
+        alertDiv.textContent = 'File size exceeds 5 MB. Please upload a smaller file.';
         alertDiv.classList.remove('hidden');
         event.target.value = '';
         setTimeout(() => alertDiv.classList.add('hidden'), 3000);
