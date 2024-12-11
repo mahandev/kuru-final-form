@@ -12,6 +12,7 @@ from gridfs import GridFS
 import json
 from flask_session import Session
 from flask_cors import CORS
+from datetime import datetime
 
 load_dotenv()
 
@@ -49,6 +50,7 @@ def submit_user_information():
         registration_type = request.form.get("registration_type")
         institute_name = request.form.get("institute_name")
         person_incharge_phone = request.form.get("person_incharge_phone")
+        person_incharge_email = request.form.get("person_incharge_email")
         shuttle_interest = request.form.get("shuttle_interest")
         user_info = {
             "first_name": first_name,
@@ -56,6 +58,7 @@ def submit_user_information():
             "registration_type": registration_type,
             "institute_name": institute_name,
             "person_incharge_phone": person_incharge_phone,
+            "person_incharge_email": person_incharge_email,
             "shuttle_interest": shuttle_interest,
             "categories": [],  # Initialize an empty list for events
         }
@@ -388,9 +391,22 @@ def management_particpant_submit():
         payment_image_id = fs.put(
             payment_image, filename=f"{user['first_name']}_payment_image", content_type=image.content_type
         )
-        payment_transaction_id = request.form.getlist("paymentId")
+        payment_transaction_id = request.form.get("paymentId")
         user["payment_image"] = payment_image_id
-        user["payment_transaction_id"] = payment_image_id
+        user["payment_transaction_id"] = payment_transaction_id
+        user["verified"] = "unverified"
+        
+        from datetime import datetime
+        import pytz
+
+        # Get current GMT time
+        now = datetime.now(pytz.timezone("GMT"))
+
+        # Convert to IST
+        ist_time = now.astimezone(pytz.timezone("Asia/Kolkata"))
+
+        # Format the time as per your requirement
+        user["date_of_submission"] = ist_time.strftime("%d/%m/%Y %H:%M:%S")
         
 
 

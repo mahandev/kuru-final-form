@@ -127,6 +127,13 @@
         </div>
         <div class="mb-5">
 
+          <label for="email-input" class="block mb-2 text-sm font-medium text-white">Email Address of Person Incharge:</label>
+        
+              <input type="email" name="person_incharge_email" placeholder="Email Address" value="{{ session['user'].get('person_incharge_email', '') if session.get('user') else '' }}" id="email-input" aria-describedby="helper-text-explanation" class="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+              required />
+          </div>
+        <div class="mb-5">
+
         <label for="shuttle" class="block mb-2 text-sm font-medium text-white">Interested in taking a shuttle to FLAME University at subsidized rate?</label>
         <select id="shuttle" name="shuttle_interest" required class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-4 p-2.5 bg-[#282828] border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
         >
